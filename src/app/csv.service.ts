@@ -1,18 +1,15 @@
-import * as csvParser from 'csv-parser';
-import * as fs from 'fs';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
+@Injectable({
+  providedIn: 'root'
+})
 export class CsvService {
-  constructor() { }
+  landingsData = 'src/assets/landings.csv';
 
-  async readCsvFile(filePath: string): Promise<any[]> {
-    const results: any[] = [];
+  constructor(private http: HttpClient) { }
 
-    return new Promise((resolve, reject) => {
-      fs.createReadStream(filePath)
-        .pipe(csvParser())
-        .on('data', (data: any) => results.push(data))
-        .on('end', () => resolve(results))
-        .on('error', (error: any) => reject(error));
-    });
+  readCsvFile() {
+    return this.http.get(this.landingsData, { responseType: 'text' });
   }
 }

@@ -1,25 +1,32 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { CsvService } from '../csv.service';
 
 @Component({
   selector: 'app-landing',
   templateUrl: './landing.component.html',
   styleUrls: ['./landing.component.css']
 })
-export class LandingComponent {
+export class LandingComponent implements OnInit {
   nombre: string | undefined;
   rol: string | undefined;
   descripcion: string | undefined;
-  proyectos: any[] | undefined;
 
-  constructor() { }
+  constructor(private csvService: CsvService) { }
 
   ngOnInit(): void {
-    this.nombre = 'Manuel Ferrer';
-    this.rol = 'Software developer';
-    this.descripcion = 'Software developer enfocado en el frontend con 7 años de experiencia';
-    this.proyectos = [
-      { nombre: 'Proyecto 1', descripcion: 'Descripción del proyecto 1' },
-      { nombre: 'Proyecto 2', descripcion: 'Descripción del proyecto 2' }
-    ];
+    this.csvService.readCsvFile().subscribe(
+      (data: any) => {
+        const lines = data.split('\n');
+        if (lines.length > 1) {
+          const fields = lines[1].split(',');
+          this.nombre = fields[0];
+          this.rol = fields[1];
+          this.descripcion = fields[2];
+        }
+      },
+      error => {
+        console.error('Error al leer el archivo CSV:', error);
+      }
+    );
   }
 }

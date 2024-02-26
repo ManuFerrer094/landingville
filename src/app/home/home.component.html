@@ -3,7 +3,7 @@
   <p>Por favor selecciona una landing:</p>
   <ul>
     <li *ngFor="let landing of landings">
-      <a [routerLink]="['/landing', landing.id]">{{ landing.title }}</a>
+      <a [routerLink]="landing.url">{{ landing.title }}</a>
     </li>
   </ul>
 </div>
