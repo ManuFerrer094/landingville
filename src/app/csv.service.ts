@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class CsvService {
-  landingsData = 'src/assets/landings.csv';
+  landingsData = 'assets/landings.csv';
 
   constructor(private http: HttpClient) { }
 
