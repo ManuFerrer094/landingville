@@ -13,6 +13,7 @@ import { MatCardModule } from '@angular/material/card';
 import { CsvReaderComponent } from './csv-reader/csv-reader.component';
 import { HomeComponent } from './home/home.component';
 import { HttpClientModule } from '@angular/common/http';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { HttpClientModule } from '@angular/common/http';
     MatToolbarModule,
     MatButtonModule,
     MatCardModule,
+    MatListModule,
     HttpClientModule
   ],
   providers: [],

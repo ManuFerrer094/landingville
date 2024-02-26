@@ -1,5 +1,8 @@
-<ul>
-  <li *ngFor="let landing of landings">
-    <a [routerLink]="landing.url" [state]="{ userIndex: landing.id }">{{ landing.title }}</a>
-  </li>
-</ul>
+<div class="container">
+  <h2>Todos los</h2>
+  <ul>
+    <li *ngFor="let landing of landings">
+      <a [routerLink]="landing.url" [state]="{ userIndex: landing.id }">{{ landing.title }}</a>
+    </li>
+  </ul>
+</div>

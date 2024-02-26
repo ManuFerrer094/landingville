@@ -41,4 +41,10 @@ export class LandingComponent implements OnInit {
       }
     });
   }
+
+  sendEmail() {
+    if (this.email) {
+      window.open(`mailto:${this.email}`);
+    }
+  }
 }

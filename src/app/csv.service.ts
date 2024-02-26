@@ -28,8 +28,19 @@ export class CsvService {
           telefono: fields[4],
           linkedin: fields[5],
           github: fields[6],
-          foto: fields[7]
+          foto: fields[7],
+          username: fields[8]
         };
+      })
+    );
+  }
+
+  getUsernameFromCsv(): Observable<string> {
+    return this.readCsvFile().pipe(
+      map((data: string) => {
+        const lines = data.split('\n');
+        const fields = lines[0].split(',');
+        return fields[8];
       })
     );
   }

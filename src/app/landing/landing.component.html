@@ -1,14 +1,18 @@
 <section id="landing">
   <div class="container">
-    <mat-toolbar color="primary">
-      <span class="toolbar-title">CV de {{ nombre }}</span>
-    </mat-toolbar>
+    <h1>Hola, soy {{ nombre }}</h1>
     <div class="profile-card">
-      <div class="avatar" [style.background-image]="'url(' + foto + ')'"></div>
-      <h1>{{ nombre }}</h1>
-      <h2>{{ rol }}</h2>
-      <p>{{ descripcion }}</p>
+      <div class="available">
+        <div class="avatar" [style.background-image]="'url(' + foto + ')'">
+        </div>
+        <h2>{{ rol }}</h2>
+        <p>{{ descripcion }}</p>
+      </div>
     </div>
+  </div>
+</section>
+<section id="contact">
+  <div class="container">
     <div class="contact-card">
       <h2>Contacto</h2>
       <ul>
@@ -18,5 +22,10 @@
         <li><strong>GitHub:</strong> <a target="_blank" href="{{ github }}">Github</a></li>
       </ul>
     </div>
+  </div>
+</section>
+<section id="projects">
+  <div class="container">
+    <app-portfolio></app-portfolio>
   </div>
 </section>
