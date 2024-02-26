@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CsvService } from '../csv.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-landing',
@@ -17,7 +18,7 @@ export class LandingComponent implements OnInit {
   github: string | undefined;
   foto: string | undefined;
 
-  constructor(private route: ActivatedRoute, private csvService: CsvService) { }
+  constructor(private route: ActivatedRoute, private csvService: CsvService, private router: Router) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -46,5 +47,9 @@ export class LandingComponent implements OnInit {
     if (this.email) {
       window.open(`mailto:${this.email}`);
     }
+  }
+
+  callPhone(): void {
+    this.router.navigateByUrl('tel:' + this.telefono);
   }
 }

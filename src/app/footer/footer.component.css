@@ -1,11 +1,38 @@
+/* Estilos generales del footer */
 .footer {
-  background-color: #2f2f2f;
+  background-color: #222;
   color: #fff;
-  padding: 20px 0;
+  padding: 50px 0;
   text-align: center;
-  justify-content: center;
 }
 
 .footer p {
-  margin: 0;
+  font-size: 16px;
+}
+
+/* Estilos para los enlaces del footer */
+.footer a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+/* Estilos para los enlaces de redes sociales */
+.social-links {
+  margin-top: 20px;
+}
+
+.social-links a {
+  display: inline-block;
+  margin: 0 10px;
+  font-size: 20px;
+  color: #fff;
+  text-decoration: none;
+}
+
+.social-links a:hover {
+  color: #007bff;
 }

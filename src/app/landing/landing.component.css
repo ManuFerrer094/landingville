@@ -1,55 +1,73 @@
-#landing {
-  padding: 50px;
+/* Estilos generales */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
-.container {
-  max-width: 800px;
-  margin: 0 auto;
+/* Estilos para la sección 'landing' */
+#landing {
+  padding: 100px 0;
+  text-align: center;
+}
+
+#landing h1 {
+  font-size: 36px;
+  margin-bottom: 20px;
 }
 
 .profile-card {
-  background-color: #fff;
+  background-color: #f9f9f9;
   border-radius: 8px;
-  padding: 20px;
-  margin-bottom: 20px;
-}
-
-.profile-card h1, .profile-card h2 {
-  margin: 0;
+  padding: 40px;
+  margin-top: 40px;
 }
 
 .profile-card .avatar {
-  width: 100px;
-  height: 100px;
-  background-color: #ccc;
-  border-radius: 50%;
-  margin: 0 auto 20px;
+  width: 150px;
+  height: 150px;
   background-size: cover;
   background-position: center;
+  border-radius: 50%;
+  margin: 0 auto 20px;
 }
 
-.experience-card {
-  background-color: #fff;
-  border-radius: 8px;
-  padding: 20px;
-  margin-bottom: 20px;
-}
-
-.experience-card h2 {
-  margin-top: 0;
-}
-
-.contact-card {
-  background-color: #fff;
-  border-radius: 8px;
-  padding: 20px;
-}
-
-.contact-card ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-.contact-card ul li {
+.profile-card h2 {
+  font-size: 24px;
   margin-bottom: 10px;
+}
+
+.profile-card p {
+  font-size: 16px;
+  color: #666;
+}
+
+/* Estilos para la sección 'projects' */
+#projects {
+  padding: 100px 0;
+}
+
+/* Estilos para los botones de contacto */
+.contact-buttons a {
+  display: inline-block;
+  margin: 5px;
+  padding: 10px 20px;
+  text-decoration: none;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.contact-buttons a:hover {
+  border-color: #333;
+  background-color: #f9f9f9;
+}
+
+.contact-buttons a i {
+  margin-right: 5px;
+}
+
+/* Estilos para el icono de Font Awesome */
+.contact-buttons a i {
+  font-size: 20px;
 }

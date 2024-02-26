@@ -7,20 +7,23 @@
         </div>
         <h2>{{ rol }}</h2>
         <p>{{ descripcion }}</p>
+        <div class="contact-card">
+          <div class="contact-buttons">
+            <a target="_blank" href="{{ linkedin }}">
+              <i class="fab fa-linkedin"></i>
+            </a>
+            <a target="_blank" href="{{ github }}">
+              <i class="fab fa-github"></i>
+            </a>
+            <a href="mailto:{{ email }}">
+              <i class="far fa-envelope"></i>
+            </a>
+            <a href="tel:{{ telefono }}">
+              <i class="fas fa-phone"></i>
+            </a>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</section>
-<section id="contact">
-  <div class="container">
-    <div class="contact-card">
-      <h2>Contacto</h2>
-      <ul>
-        <li><strong>Email:</strong> {{ email }}</li>
-        <li><strong>Teléfono:</strong> {{ telefono }}</li>
-        <li><strong>LinkedIn:</strong> <a target="_blank" href="{{ linkedin }}">LinkedIn</a></li>
-        <li><strong>GitHub:</strong> <a target="_blank" href="{{ github }}">Github</a></li>
-      </ul>
     </div>
   </div>
 </section>
