@@ -1,2 +1,2 @@
-nombre,rol,descripcion
-Nombre1,Rol1,"Descripcion1"
+nombre,rol,descripcion,email,telefono,linkedin,github,foto
+Manuel Ferrer,Software Developer,"Un software developer con 7 años de experiencia",test@email.com,555999888,https://www.linkedin.com/in/manuferrer/,https://github.com/ManuFerrer094,https://media.licdn.com/dms/image/D4D03AQFpH2EXHauF5Q/profile-displayphoto-shrink_200_200/0/1698390183559?e=1714608000&v=beta&t=ARo2gatTuIL-EJe9PC4MT8bVm5MK5rzOx_dTCxwRnME

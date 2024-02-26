@@ -1,10 +1,10 @@
 <section id="landing">
   <div class="container">
     <mat-toolbar color="primary">
-      <span class="toolbar-title">Mi CV</span>
+      <span class="toolbar-title">CV de {{nombre}}</span>
     </mat-toolbar>
     <div class="profile-card">
-      <div class="avatar"></div>
+      <div class="avatar" [style.background-image]="'url(' + foto + ')'"></div>
       <h1>{{ nombre }}</h1>
       <h2>Software developer</h2>
       <p>{{ descripcion }}</p>
@@ -12,10 +12,10 @@
     <div class="contact-card">
       <h2>Contacto</h2>
       <ul>
-        <li><strong>Email:</strong> manuferrer094@gmail.com</li>
-        <li><strong>Teléfono:</strong> 6020207973</li>
-        <li><strong>LinkedIn:</strong> <a href="">LinkedinUrl</a></li>
-        <li><strong>GitHub:</strong> <a href="">GithubUrl</a></li>
+        <li><strong>Email:</strong> {{ email }}</li>
+        <li><strong>Teléfono:</strong> {{ telefono }}</li>
+        <li><strong>LinkedIn:</strong> <a target="_blank" href="{{linkedin}}">LinkedIn</a></li>
+        <li><strong>GitHub:</strong> <a target="_blank" href="{{github}}">Github</a></li>
       </ul>
     </div>
   </div>

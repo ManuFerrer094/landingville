@@ -9,6 +9,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class HomeComponent implements OnInit {
   landings: any[] = [];
+  columnsCount = 1;
 
   constructor(private csvService: CsvService) { }
 
@@ -18,7 +19,7 @@ export class HomeComponent implements OnInit {
         const lines = data.split('\n');
         lines.forEach((line: string, index: number) => {
           const fields = line.split(',');
-          if (index !== 0 && fields.length === 3) {
+          if (index !== 0 && fields.length > this.columnsCount) {
             this.landings.push({
               id: index,
               title: fields[0],
