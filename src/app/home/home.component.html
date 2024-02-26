@@ -1,9 +1,5 @@
-<div>
-  <h1>Home</h1>
-  <p>A quien quieres ver:</p>
-  <ul>
-    <li *ngFor="let landing of landings">
-      <a [routerLink]="landing.url">{{ landing.title }}</a>
-    </li>
-  </ul>
-</div>
+<ul>
+  <li *ngFor="let landing of landings">
+    <a [routerLink]="landing.url" [state]="{ userIndex: landing.id }">{{ landing.title }}</a>
+  </li>
+</ul>

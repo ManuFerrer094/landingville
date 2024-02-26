@@ -5,7 +5,7 @@ import { LandingComponent } from './landing/landing.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'landing/:id', component: LandingComponent },
+  { path: 'landing/:userIndex', component: LandingComponent },
   { path: '**', redirectTo: '' }
 ];
 

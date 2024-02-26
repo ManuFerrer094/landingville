@@ -1,12 +1,12 @@
 <section id="landing">
   <div class="container">
     <mat-toolbar color="primary">
-      <span class="toolbar-title">CV de {{nombre}}</span>
+      <span class="toolbar-title">CV de {{ nombre }}</span>
     </mat-toolbar>
     <div class="profile-card">
       <div class="avatar" [style.background-image]="'url(' + foto + ')'"></div>
       <h1>{{ nombre }}</h1>
-      <h2>Software developer</h2>
+      <h2>{{ rol }}</h2>
       <p>{{ descripcion }}</p>
     </div>
     <div class="contact-card">
@@ -14,8 +14,8 @@
       <ul>
         <li><strong>Email:</strong> {{ email }}</li>
         <li><strong>Teléfono:</strong> {{ telefono }}</li>
-        <li><strong>LinkedIn:</strong> <a target="_blank" href="{{linkedin}}">LinkedIn</a></li>
-        <li><strong>GitHub:</strong> <a target="_blank" href="{{github}}">Github</a></li>
+        <li><strong>LinkedIn:</strong> <a target="_blank" href="{{ linkedin }}">LinkedIn</a></li>
+        <li><strong>GitHub:</strong> <a target="_blank" href="{{ github }}">Github</a></li>
       </ul>
     </div>
   </div>
