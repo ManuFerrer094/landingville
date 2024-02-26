@@ -14,6 +14,9 @@ import { CsvReaderComponent } from './csv-reader/csv-reader.component';
 import { HomeComponent } from './home/home.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MatListModule } from '@angular/material/list';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatIconModule } from '@angular/material/icon';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -33,7 +36,10 @@ import { MatListModule } from '@angular/material/list';
     MatButtonModule,
     MatCardModule,
     MatListModule,
-    HttpClientModule
+    MatChipsModule,
+    MatIconModule,
+    HttpClientModule,
+    MatPaginatorModule
   ],
   providers: [],
   bootstrap: [AppComponent]

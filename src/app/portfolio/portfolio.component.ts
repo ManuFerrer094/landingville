@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CsvService } from '../csv.service';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-portfolio',
@@ -8,8 +9,11 @@ import { CsvService } from '../csv.service';
   styleUrls: ['./portfolio.component.css']
 })
 export class PortfolioComponent implements OnInit {
-  username: string = ''; // Nombre de usuario de GitHub
-  projects: any[] = []; // Array para almacenar los proyectos
+  username: string = '';
+  projects: any[] = [];
+  pagedProjects: any[] = [];
+
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator; // Referencia al paginador
 
   constructor(private csvService: CsvService, private http: HttpClient) { }
 
@@ -34,13 +38,23 @@ export class PortfolioComponent implements OnInit {
 
     this.http.get<any[]>(apiUrl).subscribe(
       (response) => {
-        this.projects = response.map(repo => ({
-          name: repo.name,
-          description: repo.description,
-          stack: repo.topics,
-          githubLink: repo.html_url,
-          demoLink: repo.homepage
-        }));
+        this.projects = response
+          .filter(repo => !repo.fork)
+          .map(repo => ({
+            name: repo.name,
+            description: repo.description,
+            stack: repo.topics,
+            githubLink: repo.html_url,
+            demoLink: repo.homepage,
+            createdAt: repo.created_at
+          }))
+          .sort((a, b) => {
+            const dateA = new Date(a.createdAt).getTime();
+            const dateB = new Date(b.createdAt).getTime();
+            return dateB - dateA;
+          });
+
+        this.setupPaginator();
       },
       (error) => {
         console.error('Error al obtener los proyectos de GitHub:', error);
@@ -48,16 +62,30 @@ export class PortfolioComponent implements OnInit {
     );
   }
 
+  setupPaginator(): void {
+    this.paginator.pageSize = 4;
+    this.paginator.pageIndex = 0;
+    this.paginator.page.subscribe(() => {
+      this.onPageChange();
+    });
+    this.updatePagedProjects();
+  }
+
+  onPageChange(): void {
+    this.updatePagedProjects();
+  }
+
+  updatePagedProjects(): void {
+    const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
+    const endIndex = startIndex + this.paginator.pageSize;
+    this.pagedProjects = this.projects.slice(startIndex, endIndex);
+  }
+
   generateShieldURL(technology: string): string {
     const colorMap: { [key: string]: string } = {};
     const badgeStyle = 'for-the-badge';
     const logoColor = 'fff';
     const logo = technology.toLowerCase();
-    return `https://img.shields.io/badge/${technology}-informational?style=${badgeStyle}&logo=${logo}&logoColor=${logoColor}&color=${colorMap[technology] || this.generateColorFromHash(technology)}`;
-  }
-
-  private generateColorFromHash(technology: string): string {
-    // Lógica para generar el color basado en el hash de la tecnología
-    return 'hexcolor'; // Reemplazar con la lógica real
+    return `https://img.shields.io/badge/${technology}-informational?style=${badgeStyle}&logo=${logo}&logoColor=${logoColor}&color=${colorMap[technology]}`;
   }
 }

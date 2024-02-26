@@ -1,9 +1,11 @@
-.spacer {
-  flex: 1 1 auto;
+.footer {
+  background-color: #2f2f2f;
+  color: #fff;
+  padding: 20px 0;
+  text-align: center;
+  justify-content: center;
 }
 
-.footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
+.footer p {
+  margin: 0;
 }
