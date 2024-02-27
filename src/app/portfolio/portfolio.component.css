@@ -1,45 +1,91 @@
-.project-card {
+.error-message {
+  color: #d9534f;
+  font-size: 18px;
+  font-weight: bold;
   margin-bottom: 20px;
+}
+
+.loading-message {
+  font-size: 20px;
+  font-style: italic;
+  margin-bottom: 20px;
+}
+
+.project-card {
+  width: calc(100% - 20px);
+  max-width: calc(100% - 20px);
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  margin-bottom: 40px;
+  transition: transform 0.3s ease-in-out;
+  justify-content: center;
+}
+
+@media (max-width: 767px) {
+  .project-card {
+    width: 90%;
+    padding: 5%;
+  }
 }
 
 .project-card h3 {
-  font-size: 18px;
-  font-weight: bold;
+  margin-top: 0;
   margin-bottom: 10px;
+  font-size: 24px;
+  color: #333;
 }
 
 .project-card p {
-  font-size: 14px;
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.technologies {
+  margin-bottom: 15px;
+}
+
+.technologies mat-chip {
+  margin-right: 10px;
   margin-bottom: 10px;
+  font-size: 14px;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 5px;
 }
 
-.about-stack {
-  margin-top: 10px;
-}
-
-.about-stack mat-chip {
-  margin-right: 5px;
-  margin-bottom: 5px;
-}
-
-.btn-container {
-  margin-top: 10px;
+.button-container {
+  display: flex;
+  align-items: center;
 }
 
 .btn {
-  text-decoration: none;
-  padding: 8px 16px;
-  border: 1px solid #333;
-  border-radius: 5px;
+  display: inline-block;
+  padding: 10px 20px;
   background-color: #007bff;
   color: #fff;
-  font-size: 14px;
+  text-decoration: none;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
   cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .btn:hover {
   background-color: #0056b3;
+}
+
+.project-button {
+  margin-right: 10px;
+}
+
+a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
 }

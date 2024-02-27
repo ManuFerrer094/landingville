@@ -7,10 +7,25 @@
 </div>
 
 <div *ngIf="projects.length > 0">
-  <h2>Proyectos de {{ username }}</h2>
-  <ul>
-    <li *ngFor="let project of projects">
-      <a [href]="project.html_url" target="_blank">{{ project.name }}</a>
-    </li>
-  </ul>
+  <h2>Proyectos</h2>
+  <div class="portfolio">
+    <div class="project-card" *ngFor="let project of pagedProjects">
+      <h3><a [href]="project.html_url" target="_blank">{{ project.name }}</a></h3>
+      <p>{{ project.description }}</p>
+      <div class="technologies">
+        <span *ngFor="let topic of project.topics">
+          <mat-chip>{{ topic }}</mat-chip>
+        </span>
+      </div>
+      <div class="button-container">
+        <a [href]="project.html_url" class="btn project-button" target="_blank">GitHub <i class="fab fa-github"></i></a>
+        <a *ngIf="project.homepage" [href]="project.homepage" class="btn project-button" target="_blank">Demo <i class="fas fa-external-link-alt"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="pagination">
+    <button class="btn" (click)="previousPage()">Anterior</button>
+    <span>{{ currentPage }} de {{ totalPages }}</span>
+    <button class="btn" (click)="nextPage()">Siguiente</button>
+  </div>
 </div>

@@ -9,7 +9,10 @@ import { HttpClient } from '@angular/common/http';
 export class PortfolioComponent implements OnInit {
   @Input() username: string = '';
   projects: any[] = [];
+  pagedProjects: any[] = [];
   errorMessage: string = '';
+  currentPage: number = 1;
+  itemsPerPage: number = 4;
 
   constructor(private http: HttpClient) {}
 
@@ -23,7 +26,14 @@ export class PortfolioComponent implements OnInit {
     const url = `https://api.github.com/users/${this.username}/repos`;
     this.http.get<any[]>(url).subscribe(
       (projects) => {
-        this.projects = projects;
+        this.projects = projects.sort((a, b) => {
+          if (b.created_at.localeCompare(a.created_at) === 0) {
+            return b.homepage ? 1 : -1;
+          }
+          return b.created_at.localeCompare(a.created_at);
+        });
+
+        this.paginateProjects();
         this.errorMessage = '';
       },
       (error) => {
@@ -31,5 +41,28 @@ export class PortfolioComponent implements OnInit {
         this.projects = [];
       }
     );
+  }
+
+  paginateProjects(): void {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    this.pagedProjects = this.projects.slice(startIndex, startIndex + this.itemsPerPage);
+  }
+
+  nextPage(): void {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.paginateProjects();
+    }
+  }
+
+  previousPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.paginateProjects();
+    }
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.projects.length / this.itemsPerPage);
   }
 }
