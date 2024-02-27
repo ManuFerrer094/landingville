@@ -29,6 +29,6 @@
 </section>
 <section id="projects">
   <div class="container">
-    <app-portfolio></app-portfolio>
+    <app-portfolio *ngIf="username" [username]="username"></app-portfolio>
   </div>
 </section>
