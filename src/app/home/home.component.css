@@ -3,7 +3,7 @@
 }
 
 mat-card {
-  width: calc(25% - 20px);
+  width: calc(50% - 20px); /* Ajustar el ancho de la tarjeta para dispositivos móviles */
   margin-bottom: 20px;
 }
 
@@ -42,4 +42,10 @@ mat-card-actions {
 
 .mdc-card__actions {
   padding-bottom: 5%;
+}
+
+@media only screen and (max-width: 600px) {
+  mat-card {
+    width: calc(100% - 20px);
+  }
 }
