@@ -1,8 +1,17 @@
-<div class="container">
-  <h2>Todos los</h2>
-  <ul>
-    <li *ngFor="let landing of landings">
-      <a [routerLink]="landing.url" [state]="{ userIndex: landing.id }">{{ landing.title }}</a>
-    </li>
-  </ul>
-</div>
+<section id="homepage">
+  <div class="container">
+    <h2>Todos los mamahuevo</h2>
+    <div class="mat-card-container">
+      <mat-card *ngFor="let landing of landings">
+        <div class="header-title">
+          <mat-card-title>{{ landing.name }}</mat-card-title>
+          <mat-card-subtitle>{{ landing.role }}</mat-card-subtitle>
+        </div>
+        <img mat-card-image class="avatar" [src]="landing.img" alt="{{ landing.title }}">
+        <mat-card-actions>
+          <button mat-raised-button color="primary" [routerLink]="landing.url" [state]="{ userIndex: landing.id }">Ver más</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</section>

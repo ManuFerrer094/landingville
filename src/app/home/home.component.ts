@@ -22,7 +22,9 @@ export class HomeComponent implements OnInit {
           if (index !== 0 && fields.length > this.columnsCount) {
             this.landings.push({
               id: index,
-              title: fields[0],
+              name: fields[0],
+              role: fields[1],
+              img: fields[7],
               url: `/landing/${index}`
             });
           }
