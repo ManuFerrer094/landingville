@@ -26,13 +26,15 @@ export class PortfolioComponent implements OnInit {
     const url = `https://api.github.com/users/${this.username}/repos`;
     this.http.get<any[]>(url).subscribe(
       (projects) => {
-        this.projects = projects.sort((a, b) => {
+        const ownProjects = projects.filter(project => !project.fork);
+        ownProjects.sort((a, b) => {
           if (b.created_at.localeCompare(a.created_at) === 0) {
             return b.homepage ? 1 : -1;
           }
           return b.created_at.localeCompare(a.created_at);
         });
 
+        this.projects = ownProjects;
         this.paginateProjects();
         this.errorMessage = '';
       },
