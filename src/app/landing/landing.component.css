@@ -1,11 +1,9 @@
-/* Estilos generales */
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
 }
 
-/* Estilos para la sección 'landing' */
 #landing {
   padding: 100px 0;
   text-align: center;
@@ -42,12 +40,10 @@
   color: #666;
 }
 
-/* Estilos para la sección 'projects' */
 #projects {
   padding: 100px 0;
 }
 
-/* Estilos para los botones de contacto */
 .contact-buttons a {
   display: inline-block;
   margin: 5px;
@@ -67,7 +63,6 @@
   margin-right: 5px;
 }
 
-/* Estilos para el icono de Font Awesome */
 .contact-buttons a i {
   font-size: 20px;
 }

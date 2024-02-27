@@ -13,7 +13,7 @@ export class PortfolioComponent implements OnInit {
   projects: any[] = [];
   pagedProjects: any[] = [];
 
-  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator; // Referencia al paginador
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
   constructor(private csvService: CsvService, private http: HttpClient) { }
 
