@@ -12,8 +12,6 @@
 }
 
 .project-card {
-  width: calc(100% - 20px);
-  max-width: calc(100% - 20px);
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
@@ -50,9 +48,9 @@
   margin-right: 10px;
   margin-bottom: 10px;
   font-size: 14px;
-  background-color: #007bff;
+  background-color: #424242;
   color: #fff;
-  border-radius: 5px;
+  border-radius: 50px;
 }
 
 .button-container {
