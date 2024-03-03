@@ -87,3 +87,18 @@ a {
 a:hover {
   text-decoration: underline;
 }
+
+.pagination {
+  width: 100%;
+  display: flex;
+  margin-bottom: 5vh;
+  justify-content: center;
+  left: 10%;
+}
+
+span.pagination-span {
+  padding-left: 5%;
+  padding-right: 5%;
+  position: relative;
+  top: 10px;
+}
