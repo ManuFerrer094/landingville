@@ -2,10 +2,6 @@
   {{ errorMessage }}
 </div>
 
-<div *ngIf="projects.length === 0 && !errorMessage" class="loading-message">
-  Cargando proyectos...
-</div>
-
 <div *ngIf="projects.length > 0">
   <h2>Proyectos</h2>
   <div class="portfolio">

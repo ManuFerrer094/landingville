@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CsvService {
   landingsData = 'assets/landings.csv';
+  apiUrl = 'https://api.github.com/repos/';
+  repoUrl: string = '';
 
   constructor(private http: HttpClient) { }
 
@@ -23,7 +24,7 @@ export class CsvService {
         return {
           nombre: fields[0],
           rol: fields[1],
-          descripcion: fields[2],
+          bio: fields[2],
           email: fields[3],
           telefono: fields[4],
           linkedin: fields[5],
@@ -43,5 +44,19 @@ export class CsvService {
         return fields[8];
       })
     );
+  }
+
+  getRepoContributors(repoUrl: string): Observable<any[]> {
+    const repoName = repoUrl.split('/').slice(-2).join('/');
+    const url = `${this.apiUrl}${repoName}/contributors`;
+    return this.http.get<any[]>(url);
+  }
+
+  setRepoUrl(url: string): void {
+    this.repoUrl = url;
+  }
+
+  getRepoUrl(): string {
+    return this.repoUrl;
   }
 }

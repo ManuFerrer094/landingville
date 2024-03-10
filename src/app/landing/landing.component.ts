@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CsvService } from '../csv.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-landing',
@@ -9,49 +8,60 @@ import { Router } from '@angular/router';
   styleUrls: ['./landing.component.css']
 })
 export class LandingComponent implements OnInit {
-  nombre: string | undefined;
-  rol: string | undefined;
-  descripcion: string | undefined;
-  email: string | undefined;
-  telefono: string | undefined;
-  linkedin: string | undefined;
-  github: string | undefined;
-  foto: string | undefined;
-  username: string | undefined;
+  userData: any | undefined;
 
-  constructor(private route: ActivatedRoute, private csvService: CsvService, private router: Router) { }
+  constructor(private route: ActivatedRoute, private csvService: CsvService) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
-      const userIndex = params.get('userIndex');
-      if (userIndex) {
-        this.csvService.getUserData(userIndex).subscribe(
-          (userData: any) => {
-            this.nombre = userData.nombre;
-            this.rol = userData.rol;
-            this.descripcion = userData.descripcion;
-            this.email = userData.email;
-            this.telefono = userData.telefono;
-            this.linkedin = userData.linkedin;
-            this.github = userData.github;
-            this.foto = userData.foto;
-            this.username = userData.username;
-          },
-          error => {
-            console.error('Error al cargar los datos del usuario:', error);
-          }
-        );
+      const userIndex = Number(params.get('userIndex'));
+
+      if (!isNaN(userIndex)) {
+        const repoUrl = this.csvService.getRepoUrl();
+
+        if (repoUrl) {
+          this.csvService.getRepoContributors(repoUrl).subscribe(
+            (contributors: any[]) => {
+              const userData = contributors[userIndex];
+              if (userData) {
+                this.userData = {
+                  nombre: userData.login,
+                  rol: 'Contributor',
+                  bio: userData.bio || 'Contributor to the repository',
+                  email: userData.email || '',
+                  telefono: userData.telefono || '',
+                  linkedin: userData.linkedin || '',
+                  github: userData.html_url,
+                  foto: userData.avatar_url,
+                  username: userData.login
+                };
+              } else {
+                console.error('No se encontraron datos para el usuario con el índice proporcionado.');
+              }
+            },
+            (error: any) => {
+              console.error('Error al cargar los datos de los contribuyentes:', error);
+            }
+          );
+        } else {
+          console.error('No se proporcionó una URL de repositorio válida desde HomeComponent.');
+        }
+      } else {
+        console.error('El índice del usuario no es un número válido.');
       }
     });
   }
 
+
   sendEmail() {
-    if (this.email) {
-      window.open(`mailto:${this.email}`);
+    if (this.userData && this.userData.email) {
+      window.open(`mailto:${this.userData.email}`);
     }
   }
 
   callPhone(): void {
-    this.router.navigateByUrl('tel:' + this.telefono);
+    if (this.userData && this.userData.telefono) {
+      window.open(`tel:${this.userData.telefono}`);
+    }
   }
 }

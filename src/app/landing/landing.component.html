@@ -1,24 +1,24 @@
-<section id="landing">
+<section id="landing" *ngIf="userData">
   <div class="container">
-    <h1>Hola, soy {{ nombre }}</h1>
+    <h1>Hola, soy {{ userData.nombre }}</h1>
     <div class="profile-card">
       <div class="available">
-        <div class="avatar" [style.background-image]="'url(' + foto + ')'">
+        <div class="avatar" [style.background-image]="'url(' + userData.foto + ')'">
         </div>
-        <h2>{{ rol }}</h2>
-        <p>{{ descripcion }}</p>
+        <h2>{{ userData.rol }}</h2>
+        <p>{{ userData.bio }}</p>
         <div class="contact-card">
           <div class="contact-buttons">
-            <a target="_blank" href="{{ linkedin }}">
+            <a *ngIf="userData.blog" target="_blank" [href]="userData.blog">
               <i class="fab fa-linkedin"></i>
             </a>
-            <a target="_blank" href="{{ github }}">
+            <a *ngIf="userData.github" target="_blank" [href]="userData.github">
               <i class="fab fa-github"></i>
             </a>
-            <a href="mailto:{{ email }}">
+            <a *ngIf="userData.email" [href]="'mailto:' + userData.email">
               <i class="far fa-envelope"></i>
             </a>
-            <a href="tel:{{ telefono }}">
+            <a *ngIf="userData.telefono" [href]="'tel:' + userData.telefono">
               <i class="fas fa-phone"></i>
             </a>
           </div>
@@ -29,6 +29,6 @@
 </section>
 <section id="projects">
   <div class="container">
-    <app-portfolio *ngIf="username" [username]="username"></app-portfolio>
+    <app-portfolio *ngIf="userData.username" [username]="userData.username"></app-portfolio>
   </div>
 </section>
