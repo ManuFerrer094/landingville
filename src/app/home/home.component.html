@@ -6,7 +6,7 @@
       <input matInput type="text" [(ngModel)]="repoUrl" placeholder="Introduce la URL del repositorio de GitHub">
       <button mat-raised-button color="primary" (click)="getRepoContributors()">Ver colaboradores</button>
     </div>
-    <div class="mat-card-container">
+    <div class="mat-card-container" *ngIf="displayedLandings.length > 0">
       <mat-card *ngFor="let landing of displayedLandings">
         <div class="header-title">
           <mat-card-title>{{ landing.name }}</mat-card-title>
@@ -18,9 +18,7 @@
         </mat-card-actions>
       </mat-card>
     </div>
-    <mat-paginator *ngIf="displayedLandings.length > 0" [length]="landings.length"
-                   [pageSize]="pageSize"
-                   (page)="onPageChange($event)">
+    <mat-paginator *ngIf="landings.length > 0" [length]="landings.length" [pageSize]="pageSize" (page)="onPageChange($event)">
     </mat-paginator>
   </div>
 </section>
