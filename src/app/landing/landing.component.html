@@ -1,34 +1,81 @@
-<section id="landing" *ngIf="userData">
+<section id="landing" class="landing-hero animate-fade-in" *ngIf="userData">
   <div class="container">
-    <h1>Hola, soy {{ userData.nombre }}</h1>
-    <div class="profile-card">
-      <div class="available">
-        <div class="avatar" [style.background-image]="'url(' + userData.foto + ')'">
+    <div class="profile-section">
+      <div class="profile-card modern-card">
+        <div class="profile-header">
+          <div class="avatar-container">
+            <img class="profile-avatar" [src]="userData.foto" [alt]="userData.nombre">
+            <div class="status-indicator"></div>
+          </div>
+          <div class="profile-info">
+            <h1 class="profile-name">{{ translate('landing.hello') }} {{ userData.nombre }}</h1>
+            <h2 class="profile-role">{{ userData.rol }}</h2>
+            <p class="profile-bio">{{ userData.bio }}</p>
+          </div>
         </div>
-        <h2>{{ userData.rol }}</h2>
-        <p>{{ userData.bio }}</p>
-        <div class="contact-card">
+        
+        <div class="contact-section">
           <div class="contact-buttons">
-            <a *ngIf="userData.blog" target="_blank" [href]="userData.blog">
-              <i class="fab fa-linkedin"></i>
+            <a *ngIf="userData.blog" target="_blank" [href]="userData.blog" 
+               class="contact-btn" matTooltip="LinkedIn">
+              <mat-icon>business</mat-icon>
             </a>
-            <a *ngIf="userData.github" target="_blank" [href]="userData.github">
-              <i class="fab fa-github"></i>
+            <a *ngIf="userData.github" target="_blank" [href]="userData.github" 
+               class="contact-btn" matTooltip="GitHub">
+              <mat-icon>code</mat-icon>
             </a>
-            <a *ngIf="userData.email" [href]="'mailto:' + userData.email">
-              <i class="far fa-envelope"></i>
+            <a *ngIf="userData.email" [href]="'mailto:' + userData.email" 
+               class="contact-btn" matTooltip="{{ translate('common.email') }}">
+              <mat-icon>email</mat-icon>
             </a>
-            <a *ngIf="userData.telefono" [href]="'tel:' + userData.telefono">
-              <i class="fas fa-phone"></i>
+            <a *ngIf="userData.telefono" [href]="'tel:' + userData.telefono" 
+               class="contact-btn" matTooltip="{{ translate('common.phone') }}">
+              <mat-icon>phone</mat-icon>
             </a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Enhanced Stats Section -->
+      <div class="enhanced-stats-section animate-slide-in">
+        <h3 class="stats-title">{{ translate('landing.stats') }}</h3>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon">
+              <mat-icon>folder_open</mat-icon>
+            </div>
+            <div class="stat-content">
+              <div class="stat-number">{{ animatedStats.repositories }}</div>
+              <div class="stat-label">{{ translate('landing.repositories') }}</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">
+              <mat-icon>people</mat-icon>
+            </div>
+            <div class="stat-content">
+              <div class="stat-number">{{ animatedStats.followers }}</div>
+              <div class="stat-label">{{ translate('landing.followers') }}</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">
+              <mat-icon>trending_up</mat-icon>
+            </div>
+            <div class="stat-content">
+              <div class="stat-number">{{ animatedStats.contributions }}</div>
+              <div class="stat-label">{{ translate('landing.contributions') }}</div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </section>
-<section id="projects">
+
+<section id="projects" class="projects-section">
   <div class="container">
+    <h2 class="section-title">{{ translate('landing.projects') }}</h2>
     <app-portfolio *ngIf="userData.username" [username]="userData.username"></app-portfolio>
   </div>
 </section>
