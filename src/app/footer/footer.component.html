@@ -1,7 +1,61 @@
-<footer class="footer">
+<footer class="modern-footer">
   <div class="container">
-      <div class="pmd-site-info text-center">
-          © 2024 A <a target="_blank" href="https://www.linkedin.com/in/manuferrer/">LinkedIn</a>
+    <div class="footer-content">
+      <div class="footer-brand">
+        <h3>Landing<span class="brand-accent">Ville</span></h3>
+        <p class="brand-description">{{ translate('home.subtitle') }}</p>
       </div>
+      
+      <div class="footer-links">
+        <div class="link-column">
+          <h4>{{ translate('nav.home') }}</h4>
+          <ul>
+            <li><a routerLink="/">{{ translate('nav.home') }}</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+        
+        <div class="link-column">
+          <h4>{{ translate('landing.projects') }}</h4>
+          <ul>
+            <li><a href="https://github.com" target="_blank" rel="noopener">GitHub</a></li>
+            <li><a href="#portfolio">{{ translate('nav.portfolio') }}</a></li>
+            <li><a href="#showcase">Showcase</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="footer-social">
+        <h4>Connect</h4>
+        <div class="social-links">
+          <a href="https://www.linkedin.com/in/manuferrer/" target="_blank" rel="noopener" class="social-link">
+            <mat-icon>business</mat-icon>
+          </a>
+          <a href="https://github.com" target="_blank" rel="noopener" class="social-link">
+            <mat-icon>code</mat-icon>
+          </a>
+          <a href="mailto:contact@landingville.com" class="social-link">
+            <mat-icon>email</mat-icon>
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <div class="copyright">
+        <p>© 2024 LandingVille. {{ translate('footer.rights') }}.</p>
+      </div>
+      <div class="footer-controls">
+        <button mat-button class="footer-btn" (click)="toggleTheme()">
+          <mat-icon>{{ getCurrentTheme() === 'light' ? 'dark_mode' : 'light_mode' }}</mat-icon>
+          {{ getThemeText() }}
+        </button>
+        <button mat-button class="footer-btn" (click)="toggleLanguage()">
+          <mat-icon>translate</mat-icon>
+          {{ getCurrentLanguage().toUpperCase() }}
+        </button>
+      </div>
+    </div>
   </div>
 </footer>
