@@ -1,22 +1,67 @@
-<section id="homepage">
+<section id="homepage" class="hero-section animate-fade-in">
   <div class="container">
-    <h1>LandingVille</h1>
-    <p>¡Bienvenido a LandingVille! Descubre a los colaboradores de GitHub y explora sus proyectos personales.</p>
-    <div class="input-container">
-      <input matInput type="text" [(ngModel)]="repoUrl" placeholder="Introduce la URL del repositorio de GitHub">
-      <button mat-raised-button color="primary" (click)="getRepoContributors()">Ver colaboradores</button>
-    </div>
-    <div class="mat-card-container" *ngIf="landings.length > 0">
-      <mat-card *ngFor="let landing of landings">
-        <div class="header-title">
-          <mat-card-title>{{ landing.name }}</mat-card-title>
-          <mat-card-subtitle>{{ landing.role }}</mat-card-subtitle>
+    <div class="hero-content">
+      <h1 class="hero-title">{{ translate('home.title') }}</h1>
+      <p class="hero-subtitle">{{ translate('home.subtitle') }}</p>
+      
+      <div class="search-container">
+        <mat-form-field appearance="outline" class="repo-input">
+          <mat-label>{{ translate('home.placeholder') }}</mat-label>
+          <input matInput type="text" [(ngModel)]="repoUrl" [placeholder]="translate('home.placeholder')">
+          <mat-icon matSuffix>link</mat-icon>
+        </mat-form-field>
+        <button mat-raised-button color="primary" class="search-btn" (click)="getRepoContributors()">
+          <mat-icon>search</mat-icon>
+          {{ translate('home.button') }}
+        </button>
+      </div>
+      
+      <!-- Stats Section -->
+      <div class="stats-section" *ngIf="showStats">
+        <div class="stats-grid animate-slide-in">
+          <div class="stat-card">
+            <div class="stat-number">{{ animatedStats.repositories }}</div>
+            <div class="stat-label">{{ translate('landing.repositories') }}</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">{{ animatedStats.contributors }}</div>
+            <div class="stat-label">Contributors</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">{{ animatedStats.projects }}</div>
+            <div class="stat-label">{{ translate('landing.projects') }}</div>
+          </div>
         </div>
-        <img mat-card-image class="avatar" [src]="landing.img" alt="{{ landing.title }}">
-        <mat-card-actions>
-          <button mat-raised-button color="primary" [routerLink]="landing.url" [state]="{ userIndex: landing.id }">Ver más</button>
-        </mat-card-actions>
-      </mat-card>
+      </div>
+      
+      <div class="contributors-grid" *ngIf="landings.length > 0">
+        <mat-card *ngFor="let landing of landings; let i = index" 
+                  class="contributor-card animate-fade-in" 
+                  [style.animation-delay]="(i * 0.1) + 's'">
+          <div class="card-header">
+            <img mat-card-image class="contributor-avatar" [src]="landing.img" [alt]="landing.name">
+            <div class="contributor-info">
+              <mat-card-title class="contributor-name">{{ landing.name }}</mat-card-title>
+              <mat-card-subtitle class="contributor-role">{{ landing.role }}</mat-card-subtitle>
+            </div>
+          </div>
+          <mat-card-actions class="card-actions">
+            <button mat-raised-button color="primary" 
+                    [routerLink]="landing.url" 
+                    [state]="{ userIndex: landing.id }"
+                    class="view-profile-btn">
+              <mat-icon>person</mat-icon>
+              {{ translate('home.viewMore') }}
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+      
+      <!-- Loading State -->
+      <div class="loading-container" *ngIf="isLoading">
+        <mat-progress-spinner diameter="50" mode="indeterminate"></mat-progress-spinner>
+        <p class="loading-text">{{ translate('common.loading') }}</p>
+      </div>
     </div>
   </div>
 </section>

@@ -1,4 +1,20 @@
-<mat-toolbar color="primary">
-  <span><a routerLink="/">Landing<strong>Ville</strong></a></span>
+<mat-toolbar class="modern-navbar">
+  <span class="navbar-brand">
+    <a routerLink="/">Landing<strong>Ville</strong></a>
+  </span>
+  
   <span class="spacer"></span>
+  
+  <div class="navbar-controls">
+    <!-- Language Selector -->
+    <button mat-icon-button class="control-btn" (click)="toggleLanguage()" [title]="getLanguageTooltip()">
+      <mat-icon>{{ getCurrentLanguage() === 'es' ? 'language' : 'translate' }}</mat-icon>
+      <span class="control-text">{{ getCurrentLanguage().toUpperCase() }}</span>
+    </button>
+    
+    <!-- Theme Toggle -->
+    <button mat-icon-button class="control-btn" (click)="toggleTheme()" [title]="getThemeTooltip()">
+      <mat-icon>{{ getCurrentTheme() === 'light' ? 'dark_mode' : 'light_mode' }}</mat-icon>
+    </button>
+  </div>
 </mat-toolbar>
