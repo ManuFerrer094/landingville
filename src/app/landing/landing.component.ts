@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CsvService } from '../csv.service';
 import { I18nService } from '../services/i18n.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-landing',
@@ -17,6 +18,8 @@ export class LandingComponent implements OnInit, OnDestroy {
     followers: 0,
     contributions: 0
   };
+
+  topLanguages: string[] = [];
 
   constructor(
     private route: ActivatedRoute, 
@@ -45,7 +48,8 @@ export class LandingComponent implements OnInit, OnDestroy {
                   blog: userData.blog || '',
                   github: userData.html_url,
                   foto: userData.avatar_url,
-                  username: userData.login
+                  username: userData.login,
+                  contributionsToThisRepo: userData.contributions || 0
                 };
                 
                 // Start animated stats with realistic GitHub data
@@ -88,16 +92,55 @@ export class LandingComponent implements OnInit, OnDestroy {
   }
 
   private startStatsAnimation(): void {
-    // Realistic GitHub-style stats
-    const targetStats = {
-      repositories: Math.floor(Math.random() * 50) + 10, // 10-60 repos
-      followers: Math.floor(Math.random() * 200) + 25,   // 25-225 followers
-      contributions: Math.floor(Math.random() * 800) + 200 // 200-1000 contributions
-    };
+    if (!this.userData || !this.userData.username) {
+      console.error('No username available for fetching stats');
+      return;
+    }
 
-    this.animateValue('repositories', 0, targetStats.repositories, 1500);
-    this.animateValue('followers', 0, targetStats.followers, 1800);
-    this.animateValue('contributions', 0, targetStats.contributions, 2200);
+    const username = this.userData.username;
+    const contributionsToThisRepo = this.userData.contributionsToThisRepo || 0;
+
+    // Fetch user details and repositories in parallel
+    forkJoin({
+      userDetails: this.csvService.getUserDetails(username),
+      repositories: this.csvService.getUserRepositories(username)
+    }).subscribe(
+      ({ userDetails, repositories }) => {
+        // Get real GitHub stats
+        const realStats = {
+          repositories: userDetails.public_repos || 0,
+          followers: userDetails.followers || 0,
+          // Use contributions to the current repo as proxy for total contributions
+          contributions: contributionsToThisRepo
+        };
+
+        // Calculate top languages from repositories
+        const languageCount: { [key: string]: number } = {};
+        repositories.forEach((repo: any) => {
+          if (repo.language) {
+            languageCount[repo.language] = (languageCount[repo.language] || 0) + 1;
+          }
+        });
+
+        // Sort languages by frequency and get top 5
+        this.topLanguages = Object.entries(languageCount)
+          .sort((a, b) => b[1] - a[1])
+          .slice(0, 5)
+          .map(([lang]) => lang);
+
+        // Animate the stats
+        this.animateValue('repositories', 0, realStats.repositories, 1500);
+        this.animateValue('followers', 0, realStats.followers, 1800);
+        this.animateValue('contributions', 0, realStats.contributions, 2200);
+      },
+      (error: any) => {
+        console.error('Error fetching GitHub stats:', error);
+        // Fallback to showing zeros or previous behavior
+        this.animateValue('repositories', 0, 0, 1500);
+        this.animateValue('followers', 0, 0, 1800);
+        this.animateValue('contributions', 0, 0, 2200);
+      }
+    );
   }
 
   private animateValue(key: keyof typeof this.animatedStats, start: number, end: number, duration: number): void {

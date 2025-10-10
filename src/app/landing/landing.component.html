@@ -11,6 +11,18 @@
             <h1 class="profile-name">{{ translate('landing.hello') }} {{ userData.nombre }}</h1>
             <h2 class="profile-role">{{ userData.rol }}</h2>
             <p class="profile-bio">{{ userData.bio }}</p>
+            
+            <!-- Top Technologies Section -->
+            <div class="technologies-section" *ngIf="topLanguages.length > 0">
+              <div class="tech-label">{{ translate('landing.topTechnologies') }}:</div>
+              <div class="tech-chips">
+                <mat-chip-set>
+                  <mat-chip *ngFor="let language of topLanguages" class="tech-chip">
+                    {{ language }}
+                  </mat-chip>
+                </mat-chip-set>
+              </div>
+            </div>
           </div>
         </div>
         
