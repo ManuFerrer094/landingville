@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-nombre,rol,bio,email,telefono,blog,github,foto,username
-Manuel Ferrer,Software Developer,"Un software developer con 7 años de experiencia",test@email.com,555999888,https://www.linkedin.com/in/manuferrer/,https://github.com/ManuFerrer094,https://media.licdn.com/dms/image/D4D03AQFpH2EXHauF5Q/profile-displayphoto-shrink_200_200/0/1698390183559?e=1714608000&v=beta&t=ARo2gatTuIL-EJe9PC4MT8bVm5MK5rzOx_dTCxwRnME,ManuFerrer094
-=======
 nombre,rol,descripcion,email,telefono,linkedin,github,foto,username
 Gennadiy Civil,http://www.linkedin.com/in/gcivil,,,,https://github.com/gennadiycivil,https://github.com/gennadiycivil,https://avatars.githubusercontent.com/u/12735026?v=4,gennadiycivil
 Derek Mauro,,,,,https://github.com/derekmauro,https://github.com/derekmauro,https://avatars.githubusercontent.com/u/761129?v=4,derekmauro
@@ -428,4 +424,3 @@ Joel Laity,,,,,https://github.com/joelypoley,https://github.com/joelypoley,https
 Johan Mabille,"@xtensor-stack co-author, @jupyter core team member, C++ teacher at Ecole Polytechnique",,,,https://github.com/JohanMabille,https://github.com/JohanMabille,https://avatars.githubusercontent.com/u/6754742?v=4,JohanMabille
 John Bampton,@apache committer on Apache CloudStack,,,,https://github.com/jbampton,https://github.com/jbampton,https://avatars.githubusercontent.com/u/418747?v=4,jbampton
 John Hinnegan,,,,,https://github.com/softwaregravy,https://github.com/softwaregravy,https://avatars.githubusercontent.com/u/426690?v=4,softwaregravy
->>>>>>> 03ea58c57f94ebabc0a918d6913471de871b50bd
