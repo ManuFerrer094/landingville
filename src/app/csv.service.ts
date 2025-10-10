@@ -52,6 +52,16 @@ export class CsvService {
     return this.http.get<any[]>(url);
   }
 
+  getUserDetails(username: string): Observable<any> {
+    const url = `https://api.github.com/users/${username}`;
+    return this.http.get<any>(url);
+  }
+
+  getUserRepositories(username: string): Observable<any[]> {
+    const url = `https://api.github.com/users/${username}/repos?per_page=100`;
+    return this.http.get<any[]>(url);
+  }
+
   setRepoUrl(url: string): void {
     this.repoUrl = url;
   }

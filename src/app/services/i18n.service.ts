@@ -36,6 +36,7 @@ export class I18nService {
     'landing.repositories': { es: 'Repositorios', en: 'Repositories' },
     'landing.followers': { es: 'Seguidores', en: 'Followers' },
     'landing.contributions': { es: 'Contribuciones', en: 'Contributions' },
+    'landing.topTechnologies': { es: 'Tecnologías principales', en: 'Top Technologies' },
     
     // Portfolio
     'portfolio.technologies': { es: 'Tecnologías', en: 'Technologies' },
