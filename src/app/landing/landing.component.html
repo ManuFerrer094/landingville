@@ -11,26 +11,14 @@
             <h1 class="profile-name">{{ translate('landing.hello') }} {{ userData.nombre }}</h1>
             <h2 class="profile-role">{{ userData.rol }}</h2>
             <p class="profile-bio">{{ userData.bio }}</p>
-            <p class="profile-experience" *ngIf="userExperience">
-              <mat-icon>schedule</mat-icon>
-              {{ userExperience }}
-            </p>
-            <p class="profile-location" *ngIf="userData.location">
-              <mat-icon>location_on</mat-icon>
-              {{ userData.location }}
-            </p>
-            <p class="profile-company" *ngIf="userData.company">
-              <mat-icon>business</mat-icon>
-              {{ userData.company }}
-            </p>
           </div>
         </div>
         
         <div class="contact-section">
           <div class="contact-buttons">
             <a *ngIf="userData.blog" target="_blank" [href]="userData.blog" 
-               class="contact-btn" matTooltip="Website">
-              <mat-icon>language</mat-icon>
+               class="contact-btn" matTooltip="LinkedIn">
+              <mat-icon>business</mat-icon>
             </a>
             <a *ngIf="userData.github" target="_blank" [href]="userData.github" 
                class="contact-btn" matTooltip="GitHub">
@@ -44,18 +32,6 @@
                class="contact-btn" matTooltip="{{ translate('common.phone') }}">
               <mat-icon>phone</mat-icon>
             </a>
-            <a *ngIf="userData.twitter" target="_blank" [href]="'https://twitter.com/' + userData.twitter" 
-               class="contact-btn" matTooltip="Twitter">
-              <mat-icon>alternate_email</mat-icon>
-            </a>
-          </div>
-          
-          <!-- Download CV Button -->
-          <div class="download-section">
-            <button mat-raised-button color="accent" class="download-btn" (click)="downloadCV()">
-              <mat-icon>download</mat-icon>
-              {{ translate('landing.downloadCV') }}
-            </button>
           </div>
         </div>
       </div>
@@ -92,29 +68,6 @@
             </div>
           </div>
         </div>
-      </div>
-
-      <!-- Tech Stack Section -->
-      <div class="tech-stack-section animate-slide-in" *ngIf="userLanguages.length > 0">
-        <h3 class="section-subtitle">{{ translate('landing.techStack') }}</h3>
-        <div class="languages-container">
-          <div class="language-item" *ngFor="let lang of userLanguages">
-            <div class="language-header">
-              <span class="language-name">{{ lang.name }}</span>
-              <span class="language-percentage">{{ lang.percentage.toFixed(1) }}%</span>
-            </div>
-            <div class="language-bar">
-              <div class="language-progress" 
-                   [style.width.%]="lang.percentage"
-                   [style.background-color]="getLanguageColor(lang.name)"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="loading-container" *ngIf="isLoadingDetails">
-        <mat-progress-spinner diameter="40" mode="indeterminate"></mat-progress-spinner>
-        <p class="loading-text">{{ translate('common.loading') }}</p>
       </div>
     </div>
   </div>
