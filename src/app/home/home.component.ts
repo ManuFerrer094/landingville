@@ -56,86 +56,26 @@ export class HomeComponent implements OnInit, OnDestroy {
       sessionStorage.setItem('repoUrl', this.repoUrl);
 
       this.csvService.setRepoUrl(this.repoUrl);
-      
-      // Check if it's an organization URL
-      if (this.csvService.isOrganizationUrl(this.repoUrl)) {
-        this.loadOrganizationData();
-      } else {
-        this.loadRepositoryContributors();
-      }
+      this.csvService.getRepoContributors(this.repoUrl).subscribe(
+        (contributors: any[]) => {
+          this.landings = contributors.map((contributor, index) => ({
+            id: index,
+            name: contributor.login,
+            role: contributor.type || 'Developer',
+            img: contributor.avatar_url,
+            url: `/landing/${index}`
+          }));
+          
+          // Update stats based on actual data
+          this.updateStats(contributors.length);
+          this.isLoading = false;
+        },
+        (error: HttpErrorResponse) => {
+          console.error('Error al obtener los contribuyentes del repositorio:', error.message);
+          this.isLoading = false;
+        }
+      );
     }
-  }
-
-  private loadOrganizationData(): void {
-    this.csvService.getOrgMembers(this.repoUrl).subscribe(
-      (members: any[]) => {
-        this.landings = members.map((member, index) => ({
-          id: index,
-          name: member.login,
-          role: member.type || 'Member',
-          img: member.avatar_url,
-          url: `/landing/${index}`
-        }));
-        
-        // Also fetch org repositories to show more comprehensive data
-        this.csvService.getOrgRepositories(this.repoUrl).subscribe(
-          (repos: any[]) => {
-            const totalRepos = repos.length;
-            const totalStars = repos.reduce((sum, repo) => sum + (repo.stargazers_count || 0), 0);
-            
-            // Update stats with real organization data
-            this.animateValue('contributors', this.animatedStats.contributors, members.length, 1000);
-            this.animateValue('repositories', this.animatedStats.repositories, totalRepos, 1200);
-            this.animateValue('projects', this.animatedStats.projects, Math.floor(totalStars / 10), 1500);
-            
-            this.isLoading = false;
-          },
-          (error: HttpErrorResponse) => {
-            console.error('Error fetching org repositories:', error.message);
-            this.updateStats(members.length);
-            this.isLoading = false;
-          }
-        );
-      },
-      (error: HttpErrorResponse) => {
-        console.error('Error fetching organization members:', error.message);
-        this.isLoading = false;
-      }
-    );
-  }
-
-  private loadRepositoryContributors(): void {
-    this.csvService.getRepoContributors(this.repoUrl).subscribe(
-      (contributors: any[]) => {
-        this.landings = contributors.map((contributor, index) => ({
-          id: index,
-          name: contributor.login,
-          role: contributor.type || 'Developer',
-          img: contributor.avatar_url,
-          url: `/landing/${index}`
-        }));
-        
-        // Fetch repository details for accurate stats
-        this.csvService.getRepoDetails(this.repoUrl).subscribe(
-          (repoData: any) => {
-            this.animateValue('contributors', this.animatedStats.contributors, contributors.length, 1000);
-            this.animateValue('repositories', this.animatedStats.repositories, repoData.forks_count || 0, 1200);
-            this.animateValue('projects', this.animatedStats.projects, repoData.stargazers_count || 0, 1500);
-            
-            this.isLoading = false;
-          },
-          (error: HttpErrorResponse) => {
-            console.error('Error fetching repo details:', error.message);
-            this.updateStats(contributors.length);
-            this.isLoading = false;
-          }
-        );
-      },
-      (error: HttpErrorResponse) => {
-        console.error('Error fetching repository contributors:', error.message);
-        this.isLoading = false;
-      }
-    );
   }
 
   private startStatsAnimation(): void {
