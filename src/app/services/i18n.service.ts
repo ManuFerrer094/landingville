@@ -36,6 +36,8 @@ export class I18nService {
     'landing.repositories': { es: 'Repositorios', en: 'Repositories' },
     'landing.followers': { es: 'Seguidores', en: 'Followers' },
     'landing.contributions': { es: 'Contribuciones', en: 'Contributions' },
+    'landing.techStack': { es: 'Stack Tecnológico', en: 'Tech Stack' },
+    'landing.downloadCV': { es: 'Descargar Perfil', en: 'Download Profile' },
     
     // Portfolio
     'portfolio.technologies': { es: 'Tecnologías', en: 'Technologies' },

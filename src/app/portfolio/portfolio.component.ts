@@ -1,7 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { I18nService } from '../services/i18n.service';
+import { CsvService } from '../csv.service';
 import { PageEvent } from '@angular/material/paginator';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-portfolio',
@@ -16,10 +18,14 @@ export class PortfolioComponent implements OnInit {
   isLoading: boolean = false;
   currentPage: number = 1;
   itemsPerPage: number = 6;
+  expandedProjectIndex: number = -1;
+  projectDetails: { [key: number]: any } = {};
+  loadingDetails: { [key: number]: boolean } = {};
 
   constructor(
     private http: HttpClient,
-    private i18nService: I18nService
+    private i18nService: I18nService,
+    private csvService: CsvService
   ) {}
 
   ngOnInit(): void {
@@ -125,5 +131,102 @@ export class PortfolioComponent implements OnInit {
 
   openLink(url: string): void {
     window.open(url, '_blank', 'noopener');
+  }
+
+  toggleProjectDetails(index: number, project: any): void {
+    const projectIndex = (this.currentPage - 1) * this.itemsPerPage + index;
+    
+    if (this.expandedProjectIndex === projectIndex) {
+      this.expandedProjectIndex = -1;
+      return;
+    }
+
+    this.expandedProjectIndex = projectIndex;
+    
+    if (!this.projectDetails[projectIndex]) {
+      this.loadProjectDetails(projectIndex, project);
+    }
+  }
+
+  isProjectExpanded(index: number): boolean {
+    const projectIndex = (this.currentPage - 1) * this.itemsPerPage + index;
+    return this.expandedProjectIndex === projectIndex;
+  }
+
+  isLoadingProjectDetails(index: number): boolean {
+    const projectIndex = (this.currentPage - 1) * this.itemsPerPage + index;
+    return this.loadingDetails[projectIndex] || false;
+  }
+
+  getProjectDetails(index: number): any {
+    const projectIndex = (this.currentPage - 1) * this.itemsPerPage + index;
+    return this.projectDetails[projectIndex];
+  }
+
+  private loadProjectDetails(projectIndex: number, project: any): void {
+    this.loadingDetails[projectIndex] = true;
+    const repoUrl = `https://github.com/${this.username}/${project.name}`;
+
+    forkJoin({
+      releases: this.csvService.getRepoReleases(repoUrl),
+      languages: this.csvService.getRepoLanguages(repoUrl),
+      topics: this.csvService.getRepoTopics(repoUrl),
+      contributors: this.csvService.getRepoContributors(repoUrl)
+    }).subscribe({
+      next: (result) => {
+        // Process languages for display
+        const totalBytes = Object.values(result.languages).reduce((sum: number, bytes) => sum + (bytes as number), 0);
+        const languagesArray = Object.entries(result.languages)
+          .map(([name, bytes]) => ({
+            name,
+            bytes: bytes as number,
+            percentage: totalBytes > 0 ? ((bytes as number) / totalBytes) * 100 : 0
+          }))
+          .sort((a, b) => b.bytes - a.bytes)
+          .slice(0, 5); // Top 5 languages
+
+        this.projectDetails[projectIndex] = {
+          releases: result.releases.slice(0, 5), // Top 5 releases
+          languages: languagesArray,
+          topics: result.topics,
+          contributors: result.contributors.slice(0, 10) // Top 10 contributors
+        };
+        
+        this.loadingDetails[projectIndex] = false;
+      },
+      error: (error) => {
+        console.error('Error loading project details:', error);
+        this.projectDetails[projectIndex] = {
+          releases: [],
+          languages: [],
+          topics: [],
+          contributors: [],
+          error: true
+        };
+        this.loadingDetails[projectIndex] = false;
+      }
+    });
+  }
+
+  getLanguageColor(language: string): string {
+    const colors: { [key: string]: string } = {
+      'JavaScript': '#f1e05a',
+      'TypeScript': '#2b7489',
+      'Python': '#3572A5',
+      'Java': '#b07219',
+      'C++': '#f34b7d',
+      'C#': '#178600',
+      'PHP': '#4F5D95',
+      'Ruby': '#701516',
+      'Go': '#00ADD8',
+      'Rust': '#dea584',
+      'Swift': '#ffac45',
+      'Kotlin': '#F18E33',
+      'HTML': '#e34c26',
+      'CSS': '#563d7c',
+      'Shell': '#89e051',
+      'Dart': '#00B4AB'
+    };
+    return colors[language] || '#858585';
   }
 }
