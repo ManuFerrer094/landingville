@@ -1,0 +1,52 @@
+<div class="contribution-graph">
+  <div class="graph-header">
+    <h3 class="graph-title">{{ totalContributions }} contributions in the last year</h3>
+  </div>
+  
+  <div class="graph-container">
+    <div class="graph-labels">
+      <div class="weekday-labels">
+        <span class="weekday-label"></span>
+        <span class="weekday-label">Mon</span>
+        <span class="weekday-label"></span>
+        <span class="weekday-label">Wed</span>
+        <span class="weekday-label"></span>
+        <span class="weekday-label">Fri</span>
+        <span class="weekday-label"></span>
+      </div>
+    </div>
+    
+    <div class="graph-content">
+      <div class="month-labels">
+        <span *ngFor="let month of months" 
+              class="month-label" 
+              [style.left.px]="month.offset * 13">
+          {{ month.name }}
+        </span>
+      </div>
+      
+      <div class="weeks-container">
+        <div class="week" *ngFor="let week of weeks">
+          <div class="day" 
+               *ngFor="let day of week.days"
+               [style.background-color]="getContributionColor(day.level)"
+               [matTooltip]="getTooltipText(day)"
+               matTooltipPosition="above">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="graph-footer">
+    <div class="legend">
+      <span class="legend-label">Less</span>
+      <div class="legend-item" [style.background-color]="getContributionColor(0)"></div>
+      <div class="legend-item" [style.background-color]="getContributionColor(1)"></div>
+      <div class="legend-item" [style.background-color]="getContributionColor(2)"></div>
+      <div class="legend-item" [style.background-color]="getContributionColor(3)"></div>
+      <div class="legend-item" [style.background-color]="getContributionColor(4)"></div>
+      <span class="legend-label">More</span>
+    </div>
+  </div>
+</div>
