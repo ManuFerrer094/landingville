@@ -160,20 +160,6 @@ export class DemoProfileComponent implements OnInit {
         heightLeft -= pdfHeight;
       }
 
-      // Add watermark to all pages
-      const totalPages = pdf.internal.pages.length - 1;
-      for (let i = 1; i <= totalPages; i++) {
-        pdf.setPage(i);
-        pdf.setFontSize(10);
-        pdf.setTextColor(150, 150, 150);
-        pdf.text('LandingVille', pdfWidth - 35, pdfHeight - 10);
-        
-        // Add a small logo/icon as watermark
-        pdf.setFontSize(8);
-        pdf.setTextColor(200, 200, 200);
-        pdf.text('Powered by LandingVille', pdfWidth / 2, pdfHeight - 5, { align: 'center' });
-      }
-
       // Save the PDF
       pdf.save(`CV_${this.userData.nombre}.pdf`);
       
