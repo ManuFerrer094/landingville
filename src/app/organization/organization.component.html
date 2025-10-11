@@ -178,6 +178,25 @@
     </div>
   </section>
 
+  <!-- Teams Authentication Prompt -->
+  <section class="org-section auth-prompt" *ngIf="teams.length === 0 && !authService.hasToken()">
+    <h2 class="section-title">
+      <mat-icon>groups</mat-icon>
+      Teams
+    </h2>
+    <mat-card class="auth-card">
+      <mat-card-content>
+        <mat-icon class="auth-icon">lock</mat-icon>
+        <h3>Authentication Required</h3>
+        <p>Teams information requires GitHub authentication to access.</p>
+        <button mat-raised-button color="primary" (click)="navigateToLogin()">
+          <mat-icon>login</mat-icon>
+          Login with GitHub
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </section>
+
   <!-- Projects Section -->
   <section class="org-section" *ngIf="projects.length > 0">
     <h2 class="section-title">
@@ -208,6 +227,25 @@
     </div>
   </section>
 
+  <!-- Projects Authentication Prompt -->
+  <section class="org-section auth-prompt" *ngIf="projects.length === 0 && !authService.hasToken()">
+    <h2 class="section-title">
+      <mat-icon>dashboard</mat-icon>
+      Projects
+    </h2>
+    <mat-card class="auth-card">
+      <mat-card-content>
+        <mat-icon class="auth-icon">lock</mat-icon>
+        <h3>Authentication Required</h3>
+        <p>Projects information requires GitHub authentication to access.</p>
+        <button mat-raised-button color="primary" (click)="navigateToLogin()">
+          <mat-icon>login</mat-icon>
+          Login with GitHub
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </section>
+
   <!-- Packages Section -->
   <section class="org-section" *ngIf="packages.length > 0">
     <h2 class="section-title">
@@ -236,6 +274,25 @@
         </mat-card-content>
       </mat-card>
     </div>
+  </section>
+
+  <!-- Packages Authentication Prompt -->
+  <section class="org-section auth-prompt" *ngIf="packages.length === 0 && !authService.hasToken()">
+    <h2 class="section-title">
+      <mat-icon>inventory_2</mat-icon>
+      Packages
+    </h2>
+    <mat-card class="auth-card">
+      <mat-card-content>
+        <mat-icon class="auth-icon">lock</mat-icon>
+        <h3>Authentication Required</h3>
+        <p>Packages information requires GitHub authentication to access.</p>
+        <button mat-raised-button color="primary" (click)="navigateToLogin()">
+          <mat-icon>login</mat-icon>
+          Login with GitHub
+        </button>
+      </mat-card-content>
+    </mat-card>
   </section>
 </div>
 
