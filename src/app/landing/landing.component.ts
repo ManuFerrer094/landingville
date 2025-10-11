@@ -3,6 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { CsvService } from '../csv.service';
 import { I18nService } from '../services/i18n.service';
 import { forkJoin } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-landing',
@@ -20,11 +23,13 @@ export class LandingComponent implements OnInit, OnDestroy {
   };
 
   topLanguages: any[] = []; // Changed to store objects with percentage
+  userProjects: any[] = []; // Store user projects
 
   constructor(
     private route: ActivatedRoute, 
     private csvService: CsvService,
-    private i18nService: I18nService
+    private i18nService: I18nService,
+    private http: HttpClient
   ) { }
 
   ngOnInit(): void {
@@ -155,6 +160,17 @@ export class LandingComponent implements OnInit, OnDestroy {
         // Store language stats with percentages
         this.topLanguages = languageStats;
 
+        // Store projects (limit to top 10)
+        this.userProjects = repositories
+          .filter((repo: any) => !repo.fork)
+          .sort((a: any, b: any) => {
+            if (b.stargazers_count !== a.stargazers_count) {
+              return b.stargazers_count - a.stargazers_count;
+            }
+            return new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime();
+          })
+          .slice(0, 10);
+
         // Animate the stats
         this.animateValue('repositories', 0, realStats.repositories, 1500);
         this.animateValue('followers', 0, realStats.followers, 1800);
@@ -195,21 +211,67 @@ export class LandingComponent implements OnInit, OnDestroy {
 
     const cvHtml = this.generateCVHtml();
     
-    // Create a Blob with the HTML content
-    const blob = new Blob([cvHtml], { type: 'text/html;charset=utf-8' });
-    
-    // Create a download link
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = `CV_${this.userData.nombre}.html`;
-    
-    // Trigger the download
-    document.body.appendChild(link);
-    link.click();
-    
-    // Cleanup
-    document.body.removeChild(link);
-    URL.revokeObjectURL(link.href);
+    // Create a temporary container for rendering
+    const container = document.createElement('div');
+    container.innerHTML = cvHtml;
+    container.style.position = 'absolute';
+    container.style.left = '-9999px';
+    container.style.width = '800px';
+    document.body.appendChild(container);
+
+    // Use html2canvas to convert HTML to canvas, then to PDF
+    html2canvas(container, {
+      scale: 2,
+      useCORS: true,
+      allowTaint: true,
+      backgroundColor: '#ffffff'
+    }).then((canvas) => {
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = pdf.internal.pageSize.getHeight();
+      const imgWidth = pdfWidth;
+      const imgHeight = (canvas.height * pdfWidth) / canvas.width;
+      
+      let heightLeft = imgHeight;
+      let position = 0;
+
+      // Add first page
+      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+      heightLeft -= pdfHeight;
+
+      // Add additional pages if content is longer than one page
+      while (heightLeft >= 0) {
+        position = heightLeft - imgHeight;
+        pdf.addPage();
+        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pdfHeight;
+      }
+
+      // Add watermark to all pages
+      const totalPages = pdf.internal.pages.length - 1;
+      for (let i = 1; i <= totalPages; i++) {
+        pdf.setPage(i);
+        pdf.setFontSize(10);
+        pdf.setTextColor(150, 150, 150);
+        pdf.text('LandingVille', pdfWidth - 35, pdfHeight - 10);
+        
+        // Add a small logo/icon as watermark
+        pdf.setFontSize(8);
+        pdf.setTextColor(200, 200, 200);
+        pdf.text('Powered by LandingVille', pdfWidth / 2, pdfHeight - 5, { align: 'center' });
+      }
+
+      // Save the PDF
+      pdf.save(`CV_${this.userData.nombre}.pdf`);
+      
+      // Cleanup
+      document.body.removeChild(container);
+    }).catch((error) => {
+      console.error('Error generating PDF:', error);
+      document.body.removeChild(container);
+    });
   }
 
   private generateCVHtml(): string {
@@ -341,6 +403,25 @@ export class LandingComponent implements OnInit, OnDestroy {
       font-weight: 600;
       margin-left: 5px;
     }
+    .projects-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+    .projects-table th,
+    .projects-table td {
+      border: 1px solid #e0e0e0;
+      padding: 10px;
+      text-align: left;
+    }
+    .projects-table th {
+      background: #667eea;
+      color: white;
+      font-weight: 600;
+    }
+    .projects-table tr:nth-child(even) {
+      background: #f8f9fa;
+    }
     @media print {
       body {
         background: white;
@@ -402,6 +483,32 @@ export class LandingComponent implements OnInit, OnDestroy {
             `<div class="cv-tech-item">${lang.language}<span class="cv-tech-percentage">${lang.percentage}%</span></div>`
           ).join('')}
         </div>
+      </div>
+      ` : ''}
+      
+      ${this.userProjects.length > 0 ? `
+      <div class="cv-section">
+        <h3 class="cv-section-title">Proyectos</h3>
+        <table class="projects-table">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Descripción</th>
+              <th>Lenguaje</th>
+              <th>⭐ Stars</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${this.userProjects.map(project => `
+              <tr>
+                <td><strong>${project.name}</strong></td>
+                <td>${project.description || 'Sin descripción'}</td>
+                <td>${project.language || 'N/A'}</td>
+                <td>${project.stargazers_count}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
       </div>
       ` : ''}
     </div>
