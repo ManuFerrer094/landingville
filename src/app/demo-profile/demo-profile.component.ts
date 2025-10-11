@@ -38,10 +38,7 @@ export class DemoProfileComponent implements OnInit {
     { language: 'CSS', count: 4, percentage: 4 }
   ];
 
-  contributions: any[] = [];
-
   constructor(private i18nService: I18nService) {
-    this.generateMockContributions();
     this.animateStats();
   }
 
@@ -49,17 +46,6 @@ export class DemoProfileComponent implements OnInit {
 
   translate(key: string): string {
     return this.i18nService.translate(key);
-  }
-
-  private generateMockContributions(): void {
-    const today = new Date();
-    for (let i = 0; i < 365; i++) {
-      const date = new Date(today);
-      date.setDate(today.getDate() - i);
-      const dateStr = date.toISOString().split('T')[0];
-      const count = Math.floor(Math.random() * 15); // Random 0-14 contributions
-      this.contributions.push({ date: dateStr, count });
-    }
   }
 
   private animateStats(): void {

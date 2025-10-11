@@ -16,24 +16,6 @@
         </button>
       </div>
       
-      <!-- Stats Section -->
-      <div class="stats-section" *ngIf="showStats">
-        <div class="stats-grid animate-slide-in">
-          <div class="stat-card">
-            <div class="stat-number">{{ animatedStats.repositories }}</div>
-            <div class="stat-label">{{ translate('landing.repositories') }}</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number">{{ animatedStats.contributors }}</div>
-            <div class="stat-label">Contributors</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number">{{ animatedStats.projects }}</div>
-            <div class="stat-label">{{ translate('landing.projects') }}</div>
-          </div>
-        </div>
-      </div>
-      
       <div class="contributors-grid" *ngIf="landings.length > 0">
         <mat-card *ngFor="let landing of landings; let i = index" 
                   class="contributor-card animate-fade-in" 

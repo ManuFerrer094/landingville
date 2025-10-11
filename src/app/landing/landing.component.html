@@ -10,7 +10,7 @@
           <div class="profile-info">
             <h1 class="profile-name">{{ translate('landing.hello') }} {{ userData.nombre }}</h1>
             <h2 class="profile-role">{{ userData.rol }}</h2>
-            <p class="profile-bio">{{ userData.bio }}</p>
+            <p class="profile-bio" *ngIf="userData.bio">{{ userData.bio }}</p>
             
             <!-- Additional Profile Info -->
             <div class="profile-details" *ngIf="userData.company || userData.location || userData.twitter_username">
@@ -91,13 +91,6 @@
           </div>
         </div>
       </div>
-      
-      <!-- Contribution Graph -->
-      <app-contribution-graph 
-        *ngIf="userData.username" 
-        [username]="userData.username"
-        [contributions]="contributions">
-      </app-contribution-graph>
       
       <!-- Enhanced Stats Section -->
       <div class="enhanced-stats-section animate-slide-in">

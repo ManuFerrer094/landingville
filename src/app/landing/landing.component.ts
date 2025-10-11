@@ -20,7 +20,6 @@ export class LandingComponent implements OnInit, OnDestroy {
   };
 
   topLanguages: any[] = []; // Changed to store objects with percentage
-  contributions: any[] = [];
 
   constructor(
     private route: ActivatedRoute, 
@@ -46,7 +45,7 @@ export class LandingComponent implements OnInit, OnDestroy {
                     this.userData = {
                       nombre: userData.login,
                       rol: userData.type || 'Developer',
-                      bio: fullUserData.bio || 'Software Developer passionate about creating amazing experiences.',
+                      bio: fullUserData.bio || '',
                       email: fullUserData.email || '',
                       telefono: userData.telefono || '',
                       blog: fullUserData.blog || '',
@@ -69,7 +68,7 @@ export class LandingComponent implements OnInit, OnDestroy {
                     this.userData = {
                       nombre: userData.login,
                       rol: userData.type || 'Developer',
-                      bio: 'Software Developer passionate about creating amazing experiences.',
+                      bio: '',
                       email: userData.email || '',
                       telefono: userData.telefono || '',
                       blog: userData.blog || '',
