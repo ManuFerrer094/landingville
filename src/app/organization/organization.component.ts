@@ -151,5 +151,26 @@ export class OrganizationComponent implements OnInit {
   navigateToLogin(): void {
     this.router.navigate(['/login']);
   }
+
+  createLandingFromRepo(repo: any): void {
+    // Set the repo URL in sessionStorage and navigate to home
+    // Home component will pick it up and process it automatically
+    const repoUrl = repo.html_url;
+    sessionStorage.setItem('repoUrl', repoUrl);
+    this.router.navigate(['/']);
+  }
+
+  createLandingFromMember(member: any): void {
+    // For members, we could show their repos or just navigate to their GitHub
+    // Let's navigate to home with their profile URL pre-filled
+    // Since a user URL is not a repo URL, it won't auto-process
+    const memberUrl = member.html_url;
+    sessionStorage.setItem('repoUrl', memberUrl);
+    this.router.navigate(['/']);
+  }
+
+  openInGitHub(url: string): void {
+    window.open(url, '_blank');
+  }
 }
 

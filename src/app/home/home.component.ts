@@ -38,16 +38,19 @@ export class HomeComponent implements OnInit, OnDestroy {
   getRepoContributors() {
     if (this.repoUrl) {
       this.isLoading = true;
-      sessionStorage.setItem('repoUrl', this.repoUrl);
 
       // Check if it's an organization URL
       if (this.csvService.isOrganizationUrl(this.repoUrl)) {
         const orgName = this.csvService.extractOrgName(this.repoUrl);
         this.isLoading = false;
+        // Clear sessionStorage to avoid navigation loop
+        sessionStorage.removeItem('repoUrl');
         // Navigate to organization page
         this.router.navigate(['/organization', orgName]);
         return;
       }
+
+      sessionStorage.setItem('repoUrl', this.repoUrl);
 
       this.csvService.setRepoUrl(this.repoUrl);
       this.csvService.getRepoContributors(this.repoUrl).subscribe(
