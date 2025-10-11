@@ -388,6 +388,8 @@
   font-size: 12px;
   font-weight: 600;
   fill: var(--text-primary);
+  transform: rotate(90deg);
+  transform-origin: center;
 }
 
 .tech-name {
