@@ -161,6 +161,11 @@
   height: 24px;
 }
 
+.download-cv-btn {
+  border: none;
+  cursor: pointer;
+}
+
 /* Enhanced Stats Section */
 .enhanced-stats-section {
   background: var(--bg-card);
@@ -388,6 +393,8 @@
   font-size: 12px;
   font-weight: 600;
   fill: var(--text-primary);
+  transform: rotate(90deg);
+  transform-origin: center;
 }
 
 .tech-name {
