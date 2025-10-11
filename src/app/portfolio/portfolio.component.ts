@@ -124,6 +124,6 @@ export class PortfolioComponent implements OnInit {
   }
 
   openLink(url: string): void {
-    window.open(url, '_blank', 'noopener');
+    window.open(url, '_blank');
   }
 }
