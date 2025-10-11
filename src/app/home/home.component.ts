@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import { CsvService } from '../csv.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { I18nService } from '../services/i18n.service';
@@ -15,7 +16,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   constructor(
     private csvService: CsvService,
-    private i18nService: I18nService
+    private i18nService: I18nService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -43,7 +45,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         const orgName = this.csvService.extractOrgName(this.repoUrl);
         this.isLoading = false;
         // Navigate to organization page
-        window.location.href = `/organization/${orgName}`;
+        this.router.navigate(['/organization', orgName]);
         return;
       }
 
