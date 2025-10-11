@@ -1,0 +1,152 @@
+.contribution-graph {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  margin-top: var(--spacing-2xl);
+}
+
+.graph-header {
+  margin-bottom: var(--spacing-lg);
+}
+
+.graph-title {
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.graph-container {
+  display: flex;
+  gap: var(--spacing-sm);
+  overflow-x: auto;
+  padding: var(--spacing-sm) 0;
+}
+
+.graph-labels {
+  display: flex;
+  flex-direction: column;
+}
+
+.weekday-labels {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding-top: 20px;
+}
+
+.weekday-label {
+  height: 10px;
+  font-size: 10px;
+  line-height: 10px;
+  color: var(--text-secondary);
+  text-align: right;
+  padding-right: var(--spacing-xs);
+}
+
+.graph-content {
+  position: relative;
+  flex: 1;
+}
+
+.month-labels {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 20px;
+  display: flex;
+}
+
+.month-label {
+  position: absolute;
+  font-size: 10px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.weeks-container {
+  display: flex;
+  gap: 3px;
+  margin-top: 20px;
+}
+
+.week {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.day {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.day:hover {
+  outline: 2px solid var(--text-secondary);
+  outline-offset: 1px;
+}
+
+.graph-footer {
+  margin-top: var(--spacing-lg);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.legend {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.legend-label {
+  font-size: 10px;
+  color: var(--text-secondary);
+  margin: 0 4px;
+}
+
+.legend-item {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+
+/* Define contribution levels using CSS variables that adapt to theme */
+:host {
+  --contribution-level-0: var(--bg-secondary);
+  --contribution-level-1: #0e4429;
+  --contribution-level-2: #006d32;
+  --contribution-level-3: #26a641;
+  --contribution-level-4: #39d353;
+}
+
+/* Light theme adjustments */
+:host-context(.light-theme) {
+  --contribution-level-0: #ebedf0;
+  --contribution-level-1: #9be9a8;
+  --contribution-level-2: #40c463;
+  --contribution-level-3: #30a14e;
+  --contribution-level-4: #216e39;
+}
+
+@media (max-width: 768px) {
+  .contribution-graph {
+    padding: var(--spacing-md);
+  }
+  
+  .graph-container {
+    overflow-x: scroll;
+  }
+  
+  .weekday-label {
+    font-size: 8px;
+  }
+  
+  .month-label {
+    font-size: 9px;
+  }
+}

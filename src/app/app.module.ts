@@ -23,6 +23,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ContributionGraphComponent } from './contribution-graph/contribution-graph.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     LandingComponent,
     PortfolioComponent,
     CsvReaderComponent,
-    HomeComponent
+    HomeComponent,
+    ContributionGraphComponent
   ],
   imports: [
     BrowserModule,

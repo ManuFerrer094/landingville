@@ -62,6 +62,35 @@ export class CsvService {
     return this.http.get<any[]>(url);
   }
 
+  // Get language statistics with percentages
+  getLanguageStats(username: string): Observable<any> {
+    return this.getUserRepositories(username).pipe(
+      map((repositories: any[]) => {
+        const languageCount: { [key: string]: number } = {};
+        let totalRepos = 0;
+
+        repositories.forEach((repo: any) => {
+          if (repo.language) {
+            languageCount[repo.language] = (languageCount[repo.language] || 0) + 1;
+            totalRepos++;
+          }
+        });
+
+        // Calculate percentages and sort by count
+        const languageStats = Object.entries(languageCount)
+          .map(([language, count]) => ({
+            language,
+            count,
+            percentage: totalRepos > 0 ? Math.round((count / totalRepos) * 100) : 0
+          }))
+          .sort((a, b) => b.count - a.count)
+          .slice(0, 5); // Top 5 languages
+
+        return languageStats;
+      })
+    );
+  }
+
   setRepoUrl(url: string): void {
     this.repoUrl = url;
   }

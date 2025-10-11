@@ -347,9 +347,76 @@
   font-size: var(--font-size-sm);
   font-weight: 600;
   color: var(--text-secondary);
-  margin-bottom: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
   text-transform: uppercase;
   letter-spacing: 0.05em;
+}
+
+.tech-spinners {
+  display: flex;
+  gap: var(--spacing-lg);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.tech-spinner-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.spinner-container {
+  position: relative;
+}
+
+.progress-ring {
+  transform: rotate(-90deg);
+}
+
+.progress-ring-circle {
+  transition: stroke-dashoffset 0.5s ease;
+  stroke-linecap: round;
+}
+
+.progress-ring-circle-bg {
+  opacity: 0.2;
+}
+
+.percentage-text {
+  font-size: 12px;
+  font-weight: 600;
+  fill: var(--text-primary);
+}
+
+.tech-name {
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  font-weight: 500;
+  text-align: center;
+}
+
+.profile-details {
+  margin-top: var(--spacing-md);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  justify-content: center;
+}
+
+.profile-detail-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+.profile-detail-item mat-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  color: var(--primary-color);
 }
 
 .tech-chips {
