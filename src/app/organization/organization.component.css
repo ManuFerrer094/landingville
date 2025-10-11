@@ -346,7 +346,9 @@
   gap: var(--spacing-lg);
 }
 
-.team-card {
+.team-card,
+.project-card,
+.package-card {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
@@ -354,19 +356,25 @@
   box-shadow: var(--shadow-sm);
 }
 
-.team-card:hover {
+.team-card:hover,
+.project-card:hover,
+.package-card:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-xl);
   border-color: var(--primary-color);
 }
 
-.team-stats {
+.team-stats,
+.project-stats,
+.package-stats {
   display: flex;
   gap: var(--spacing-md);
   flex-wrap: wrap;
 }
 
-.team-stat {
+.team-stat,
+.project-stat,
+.package-stat {
   display: flex;
   align-items: center;
   gap: var(--spacing-xs);
@@ -375,7 +383,9 @@
   font-weight: 500;
 }
 
-.team-stat mat-icon {
+.team-stat mat-icon,
+.project-stat mat-icon,
+.package-stat mat-icon {
   font-size: 16px;
   width: 16px;
   height: 16px;
@@ -389,76 +399,7 @@
   gap: var(--spacing-lg);
 }
 
-.project-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
-  transition: var(--transition-base);
-  box-shadow: var(--shadow-sm);
-}
-
-.project-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-xl);
-  border-color: var(--primary-color);
-}
-
-.project-name {
-  color: var(--primary-color);
-  text-decoration: none;
-  font-weight: 600;
-  font-size: var(--font-size-lg);
-  transition: var(--transition-fast);
-}
-
-.project-name:hover {
-  color: var(--primary-hover);
-  text-decoration: underline;
-}
-
-.project-stats {
-  display: flex;
-  gap: var(--spacing-md);
-  flex-wrap: wrap;
-}
-
-.project-stat {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-xs);
-  color: var(--text-secondary);
-  font-size: var(--font-size-sm);
-  font-weight: 500;
-}
-
-.project-stat mat-icon {
-  font-size: 16px;
-  width: 16px;
-  height: 16px;
-  color: var(--primary-color);
-}
-
-/* Packages Grid */
-.packages-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: var(--spacing-lg);
-}
-
-.package-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
-  transition: var(--transition-base);
-  box-shadow: var(--shadow-sm);
-}
-
-.package-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-xl);
-  border-color: var(--primary-color);
-}
-
+.project-name,
 .package-name {
   color: var(--primary-color);
   text-decoration: none;
@@ -467,31 +408,17 @@
   transition: var(--transition-fast);
 }
 
+.project-name:hover,
 .package-name:hover {
   color: var(--primary-hover);
   text-decoration: underline;
 }
 
-.package-stats {
-  display: flex;
-  gap: var(--spacing-md);
-  flex-wrap: wrap;
-}
-
-.package-stat {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-xs);
-  color: var(--text-secondary);
-  font-size: var(--font-size-sm);
-  font-weight: 500;
-}
-
-.package-stat mat-icon {
-  font-size: 16px;
-  width: 16px;
-  height: 16px;
-  color: var(--primary-color);
+/* Packages Grid */
+.packages-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--spacing-lg);
 }
 
 .loading-container,
@@ -532,57 +459,22 @@
   font-size: var(--font-size-base);
 }
 
-@media (max-width: 768px) {
-  .organization-container {
-    padding: var(--spacing-md);
-  }
-
-  .org-header {
-    flex-direction: column;
-    text-align: center;
-    padding: var(--spacing-lg);
-  }
-  
-  .org-stats {
-    justify-content: center;
-  }
-  
-  .org-links {
-    justify-content: center;
-  }
-  
-  .repos-grid,
-  .members-grid,
-  .teams-grid,
-  .projects-grid,
-  .packages-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .section-title {
-    font-size: var(--font-size-xl);
-  }
+@media (max-width:768px) {
+  .organization-container {padding: var(--spacing-md);}
+  .org-header {flex-direction: column;text-align: center;padding: var(--spacing-lg);}
+  .org-stats,.org-links {justify-content: center;}
+  .repos-grid,.members-grid,.teams-grid,.projects-grid,.packages-grid {grid-template-columns: 1fr;}
+  .section-title {font-size: var(--font-size-xl);}
 }
 
-@media (max-width: 480px) {
-  .org-name {
-    font-size: var(--font-size-2xl);
-  }
-
-  .org-description {
-    font-size: var(--font-size-base);
-  }
-
-  .org-avatar {
-    width: 100px;
-    height: 100px;
-  }
+@media (max-width:480px) {
+  .org-name {font-size: var(--font-size-2xl);}
+  .org-description {font-size: var(--font-size-base);}
+  .org-avatar {width: 100px;height: 100px;}
 }
 
 /* Authentication Prompt Styles */
-.auth-prompt {
-  margin: var(--spacing-xl) 0;
-}
+.auth-prompt {margin: var(--spacing-xl) 0;}
 
 .auth-card {
   text-align: center;
@@ -618,49 +510,31 @@
   font-size: var(--font-size-base);
 }
 
-.auth-card button {
-  margin-top: var(--spacing-md);
-}
-
-.auth-card button mat-icon {
-  margin-right: var(--spacing-xs);
-}
+.auth-card button {margin-top: var(--spacing-md);}
+.auth-card button mat-icon {margin-right: var(--spacing-xs);}
 
 /* Repository Actions */
-.repo-actions {
+.repo-actions,.member-actions {
   display: flex;
   gap: var(--spacing-sm);
   margin-top: var(--spacing-md);
   flex-wrap: wrap;
 }
 
-.repo-actions button {
-  flex: 1;
-  min-width: 120px;
-}
-
-.repo-actions .github-btn {
-  background: var(--bg-secondary);
-  color: var(--text-primary);
-}
-
-.repo-actions .github-btn:hover {
-  background: var(--text-secondary);
-}
-
-/* Member Actions */
 .member-actions {
-  display: flex;
-  gap: var(--spacing-sm);
   justify-content: center;
   margin-top: var(--spacing-sm);
 }
 
+.repo-actions button {flex: 1;min-width: 120px;}
+
+.repo-actions .github-btn,
 .member-actions .github-btn {
   background: var(--bg-secondary);
   color: var(--text-primary);
 }
 
+.repo-actions .github-btn:hover,
 .member-actions .github-btn:hover {
   background: var(--text-secondary);
 }
