@@ -1,0 +1,205 @@
+<div class="organization-container" *ngIf="!isLoading && organizationData">
+  <!-- Organization Header -->
+  <div class="org-header">
+    <img [src]="organizationData.avatar_url" alt="{{ organizationData.name }}" class="org-avatar">
+    <div class="org-info">
+      <h1 class="org-name">{{ organizationData.name || organizationData.login }}</h1>
+      <p class="org-description" *ngIf="organizationData.description">{{ organizationData.description }}</p>
+      <div class="org-stats">
+        <div class="stat-item">
+          <mat-icon>people</mat-icon>
+          <span>{{ formatNumber(members.length) }} members</span>
+        </div>
+        <div class="stat-item">
+          <mat-icon>folder</mat-icon>
+          <span>{{ formatNumber(repositories.length) }} repositories</span>
+        </div>
+        <div class="stat-item" *ngIf="organizationData.location">
+          <mat-icon>location_on</mat-icon>
+          <span>{{ organizationData.location }}</span>
+        </div>
+      </div>
+      <div class="org-links" *ngIf="organizationData.blog || organizationData.twitter_username">
+        <a [href]="organizationData.blog" target="_blank" *ngIf="organizationData.blog" class="org-link">
+          <mat-icon>link</mat-icon>
+          {{ organizationData.blog }}
+        </a>
+        <a [href]="'https://twitter.com/' + organizationData.twitter_username" target="_blank" 
+           *ngIf="organizationData.twitter_username" class="org-link">
+          <mat-icon>alternate_email</mat-icon>
+          @{{ organizationData.twitter_username }}
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Popular Repositories -->
+  <section class="org-section" *ngIf="repositories.length > 0">
+    <h2 class="section-title">
+      <mat-icon>star</mat-icon>
+      Popular Repositories
+    </h2>
+    <div class="repos-grid">
+      <mat-card *ngFor="let repo of getPopularRepositories(6)" class="repo-card">
+        <mat-card-header>
+          <mat-card-title>
+            <a [href]="repo.html_url" target="_blank" class="repo-name">{{ repo.name }}</a>
+          </mat-card-title>
+          <mat-card-subtitle *ngIf="repo.description">{{ repo.description }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="repo-stats">
+            <span class="repo-stat" *ngIf="repo.language">
+              <span class="language-dot" [style.background-color]="getLanguageColor(repo.language)"></span>
+              {{ repo.language }}
+            </span>
+            <span class="repo-stat">
+              <mat-icon>star</mat-icon>
+              {{ formatNumber(repo.stargazers_count) }}
+            </span>
+            <span class="repo-stat">
+              <mat-icon>call_split</mat-icon>
+              {{ formatNumber(repo.forks_count) }}
+            </span>
+          </div>
+          <div class="repo-topics" *ngIf="repo.topics && repo.topics.length > 0">
+            <span class="topic-tag" *ngFor="let topic of repo.topics.slice(0, 5)">{{ topic }}</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </section>
+
+  <!-- All Repositories with Commit Activity -->
+  <section class="org-section" *ngIf="repositoriesWithActivity.length > 0">
+    <h2 class="section-title">
+      <mat-icon>folder</mat-icon>
+      Repositories & Commit Activity
+    </h2>
+    <div class="repos-list">
+      <mat-card *ngFor="let repo of repositoriesWithActivity" class="repo-list-card">
+        <mat-card-header>
+          <mat-card-title>
+            <a [href]="repo.html_url" target="_blank" class="repo-name">{{ repo.name }}</a>
+          </mat-card-title>
+          <mat-card-subtitle *ngIf="repo.description">{{ repo.description }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="repo-details">
+            <div class="repo-info">
+              <div class="repo-stats">
+                <span class="repo-stat" *ngIf="repo.language">
+                  <span class="language-dot" [style.background-color]="getLanguageColor(repo.language)"></span>
+                  {{ repo.language }}
+                </span>
+                <span class="repo-stat">
+                  <mat-icon>star</mat-icon>
+                  {{ formatNumber(repo.stargazers_count) }}
+                </span>
+                <span class="repo-stat">
+                  <mat-icon>call_split</mat-icon>
+                  {{ formatNumber(repo.forks_count) }}
+                </span>
+                <span class="repo-stat">
+                  <mat-icon>visibility</mat-icon>
+                  {{ formatNumber(repo.watchers_count) }}
+                </span>
+              </div>
+            </div>
+            <div class="commit-activity" *ngIf="repo.commitActivity && repo.commitActivity.length > 0">
+              <div class="activity-stats">
+                <span class="activity-stat">
+                  <mat-icon>commit</mat-icon>
+                  Total: {{ getTotalCommits(repo.commitActivity) }}
+                </span>
+                <span class="activity-stat">
+                  <mat-icon>schedule</mat-icon>
+                  Last week: {{ getLastWeekCommits(repo.commitActivity) }}
+                </span>
+              </div>
+              <div class="activity-graph">
+                <div *ngFor="let week of repo.commitActivity.slice(-26)" 
+                     class="activity-bar"
+                     [style.height.%]="week.total > 0 ? Math.min(100, (week.total / 50) * 100) : 5"
+                     [matTooltip]="week.total + ' commits'">
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </section>
+
+  <!-- Members -->
+  <section class="org-section" *ngIf="members.length > 0">
+    <h2 class="section-title">
+      <mat-icon>people</mat-icon>
+      Members ({{ members.length }})
+    </h2>
+    <div class="members-grid">
+      <mat-card *ngFor="let member of members.slice(0, 30)" class="member-card">
+        <img [src]="member.avatar_url" [alt]="member.login" class="member-avatar">
+        <mat-card-content>
+          <a [href]="member.html_url" target="_blank" class="member-name">{{ member.login }}</a>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="show-more" *ngIf="members.length > 30">
+      <p>+ {{ members.length - 30 }} more members</p>
+    </div>
+  </section>
+
+  <!-- Links of Interest -->
+  <section class="org-section">
+    <h2 class="section-title">
+      <mat-icon>link</mat-icon>
+      Links of Interest
+    </h2>
+    <div class="links-grid">
+      <a [href]="organizationData.html_url" target="_blank" class="interest-link" mat-raised-button>
+        <mat-icon>home</mat-icon>
+        Organization Home
+      </a>
+      <a [href]="organizationData.html_url + '/repositories'" target="_blank" class="interest-link" mat-raised-button>
+        <mat-icon>folder</mat-icon>
+        All Repositories
+      </a>
+      <a [href]="organizationData.html_url + '/people'" target="_blank" class="interest-link" mat-raised-button>
+        <mat-icon>people</mat-icon>
+        All Members
+      </a>
+      <a [href]="organizationData.html_url + '/projects'" target="_blank" class="interest-link" mat-raised-button>
+        <mat-icon>dashboard</mat-icon>
+        Projects
+      </a>
+      <a [href]="organizationData.html_url + '/teams'" target="_blank" class="interest-link" mat-raised-button>
+        <mat-icon>groups</mat-icon>
+        Teams
+      </a>
+      <a [href]="organizationData.html_url + '/packages'" target="_blank" class="interest-link" mat-raised-button>
+        <mat-icon>inventory_2</mat-icon>
+        Packages
+      </a>
+      <a [href]="'https://github.com/orgs/' + organizationName + '/discussions'" target="_blank" 
+         class="interest-link" mat-raised-button>
+        <mat-icon>forum</mat-icon>
+        Discussions
+      </a>
+    </div>
+  </section>
+</div>
+
+<!-- Loading State -->
+<div class="loading-container" *ngIf="isLoading">
+  <mat-progress-spinner diameter="50" mode="indeterminate"></mat-progress-spinner>
+  <p class="loading-text">Loading organization data...</p>
+</div>
+
+<!-- Error State -->
+<div class="error-container" *ngIf="errorMessage && !isLoading">
+  <mat-icon class="error-icon">error_outline</mat-icon>
+  <h2>Error</h2>
+  <p>{{ errorMessage }}</p>
+  <button mat-raised-button color="primary" routerLink="/">Go Back</button>
+</div>

@@ -104,4 +104,78 @@ export class CsvService {
   getRepoUrl(): string {
     return this.repoUrl;
   }
+
+  // Organization-related methods
+
+  // Detect if a URL is for an organization or a repository
+  isOrganizationUrl(url: string): boolean {
+    // Remove trailing slashes
+    const cleanUrl = url.replace(/\/$/, '');
+    // Split by '/' and check if it has only 4 parts (https://github.com/org)
+    const parts = cleanUrl.split('/').filter(part => part.length > 0);
+    // Should be ['https:', 'github.com', 'orgname'] for organization
+    return parts.length === 3;
+  }
+
+  // Get organization details
+  getOrganizationDetails(orgName: string): Observable<any> {
+    const url = `https://api.github.com/orgs/${orgName}`;
+    return this.http.get<any>(url);
+  }
+
+  // Get organization repositories
+  getOrganizationRepositories(orgName: string): Observable<any[]> {
+    const url = `https://api.github.com/orgs/${orgName}/repos?per_page=100&sort=stars`;
+    return this.http.get<any[]>(url);
+  }
+
+  // Get organization members
+  getOrganizationMembers(orgName: string): Observable<any[]> {
+    const url = `https://api.github.com/orgs/${orgName}/members?per_page=100`;
+    return this.http.get<any[]>(url);
+  }
+
+  // Get organization public members
+  getOrganizationPublicMembers(orgName: string): Observable<any[]> {
+    const url = `https://api.github.com/orgs/${orgName}/public_members?per_page=100`;
+    return this.http.get<any[]>(url);
+  }
+
+  // Get repository commit activity
+  getRepositoryCommitActivity(owner: string, repo: string): Observable<any[]> {
+    const url = `https://api.github.com/repos/${owner}/${repo}/stats/commit_activity`;
+    return this.http.get<any[]>(url);
+  }
+
+  // Get repository languages
+  getRepositoryLanguages(owner: string, repo: string): Observable<any> {
+    const url = `https://api.github.com/repos/${owner}/${repo}/languages`;
+    return this.http.get<any>(url);
+  }
+
+  // Get organization teams (requires authentication, will return empty for public access)
+  getOrganizationTeams(orgName: string): Observable<any[]> {
+    const url = `https://api.github.com/orgs/${orgName}/teams`;
+    return this.http.get<any[]>(url);
+  }
+
+  // Get organization projects
+  getOrganizationProjects(orgName: string): Observable<any[]> {
+    const url = `https://api.github.com/orgs/${orgName}/projects`;
+    return this.http.get<any[]>(url);
+  }
+
+  // Get organization packages
+  getOrganizationPackages(orgName: string, packageType: string = 'npm'): Observable<any[]> {
+    const url = `https://api.github.com/orgs/${orgName}/packages?package_type=${packageType}`;
+    return this.http.get<any[]>(url);
+  }
+
+  // Extract organization name from URL
+  extractOrgName(url: string): string {
+    const cleanUrl = url.replace(/\/$/, '');
+    const parts = cleanUrl.split('/').filter(part => part.length > 0);
+    // For https://github.com/orgname, parts[2] is the org name
+    return parts[2] || '';
+  }
 }
