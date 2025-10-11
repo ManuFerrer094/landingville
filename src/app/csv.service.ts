@@ -62,6 +62,12 @@ export class CsvService {
     return this.http.get<any[]>(url);
   }
 
+  // Get languages for a specific repository
+  getRepoLanguages(owner: string, repo: string): Observable<any> {
+    const url = `https://api.github.com/repos/${owner}/${repo}/languages`;
+    return this.http.get<any>(url);
+  }
+
   // Get language statistics with percentages
   getLanguageStats(username: string): Observable<any> {
     return this.getUserRepositories(username).pipe(
