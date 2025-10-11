@@ -2,7 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CsvService } from '../csv.service';
 import { I18nService } from '../services/i18n.service';
-import { forkJoin } from 'rxjs';
+import { forkJoin, of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -61,7 +62,9 @@ export class LandingComponent implements OnInit, OnDestroy {
                       company: fullUserData.company || '',
                       location: fullUserData.location || '',
                       twitter_username: fullUserData.twitter_username || '',
-                      hireable: fullUserData.hireable
+                      hireable: fullUserData.hireable,
+                      name: fullUserData.name || '',
+                      pronouns: fullUserData.pronouns || ''
                     };
                     
                     // Start animated stats with realistic GitHub data
@@ -155,13 +158,15 @@ export class LandingComponent implements OnInit, OnDestroy {
           this.userData.location = userDetails.location || '';
           this.userData.twitter_username = userDetails.twitter_username || '';
           this.userData.hireable = userDetails.hireable;
+          this.userData.name = userDetails.name || '';
+          this.userData.pronouns = userDetails.pronouns || '';
         }
 
         // Store language stats with percentages
         this.topLanguages = languageStats;
 
-        // Store projects (limit to top 10)
-        this.userProjects = repositories
+        // Store projects (limit to top 10) and fetch languages for each
+        const topProjects = repositories
           .filter((repo: any) => !repo.fork)
           .sort((a: any, b: any) => {
             if (b.stargazers_count !== a.stargazers_count) {
@@ -170,6 +175,41 @@ export class LandingComponent implements OnInit, OnDestroy {
             return new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime();
           })
           .slice(0, 10);
+
+        // Fetch languages and enrich project data
+        const projectRequests = topProjects.map((project: any) => 
+          this.csvService.getRepoLanguages(username, project.name).pipe(
+            map((languages: any) => ({
+              ...project,
+              languages: Object.keys(languages),
+              topics: project.topics || []
+            })),
+            catchError(() => of({
+              ...project,
+              languages: project.language ? [project.language] : [],
+              topics: project.topics || []
+            }))
+          )
+        );
+
+        // Wait for all language requests to complete
+        if (projectRequests.length > 0) {
+          forkJoin(projectRequests).subscribe(
+            (enrichedProjects: any[]) => {
+              this.userProjects = enrichedProjects;
+            },
+            (error: any) => {
+              console.error('Error fetching project languages:', error);
+              this.userProjects = topProjects.map((p: any) => ({
+                ...p,
+                languages: p.language ? [p.language] : [],
+                topics: p.topics || []
+              }));
+            }
+          );
+        } else {
+          this.userProjects = [];
+        }
 
         // Animate the stats
         this.animateValue('repositories', 0, realStats.repositories, 1500);
@@ -296,6 +336,7 @@ export class LandingComponent implements OnInit, OnDestroy {
       color: #000;
       background: white;
       padding: 20px;
+      padding-bottom: 40px;
     }
     .cv-container {
       max-width: 800px;
@@ -373,6 +414,7 @@ export class LandingComponent implements OnInit, OnDestroy {
     .cv-main {
       flex: 1;
       padding: 30px;
+      padding-bottom: 40px;
     }
     .cv-header {
       margin-bottom: 30px;
@@ -455,6 +497,34 @@ export class LandingComponent implements OnInit, OnDestroy {
       align-items: center;
       gap: 4px;
     }
+    .project-languages {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+    .project-language {
+      background: #e8f4f8;
+      padding: 3px 8px;
+      border-radius: 3px;
+      font-size: 10px;
+      font-weight: 600;
+      color: #0366d6;
+    }
+    .project-topics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-top: 8px;
+    }
+    .project-topic {
+      background: #f1f8ff;
+      padding: 3px 8px;
+      border-radius: 10px;
+      font-size: 10px;
+      color: #0366d6;
+      border: 1px solid #c8e1ff;
+    }
     @media print {
       body {
         padding: 0;
@@ -466,8 +536,9 @@ export class LandingComponent implements OnInit, OnDestroy {
   <div class="cv-container">
     <div class="cv-sidebar">
       <img src="${user.foto}" alt="${user.nombre}" class="cv-avatar">
-      <h1 class="cv-name">${user.nombre}</h1>
-      <p class="cv-role">${user.rol}</p>
+      <h1 class="cv-name">@${user.username}</h1>
+      ${user.name ? `<p class="cv-role">${user.name}${user.pronouns ? ` (${user.pronouns})` : ''}</p>` : ''}
+      ${user.rol && user.rol !== 'User' ? `<p class="cv-role">${user.rol}</p>` : ''}
       
       <div class="sidebar-section">
         <h3 class="sidebar-title">Contacto</h3>
@@ -523,9 +594,16 @@ export class LandingComponent implements OnInit, OnDestroy {
               <span class="project-meta">⭐ ${project.stargazers_count}</span>
             </div>
             <p class="project-description">${project.description || 'Sin descripción'}</p>
-            <div class="project-details">
-              ${project.language ? `<span class="project-detail">🔹 ${project.language}</span>` : ''}
-            </div>
+            ${project.languages && project.languages.length > 0 ? `
+              <div class="project-languages">
+                ${project.languages.map((lang: string) => `<span class="project-language">${lang}</span>`).join('')}
+              </div>
+            ` : ''}
+            ${project.topics && project.topics.length > 0 ? `
+              <div class="project-topics">
+                ${project.topics.map((topic: string) => `<span class="project-topic">${topic}</span>`).join('')}
+              </div>
+            ` : ''}
           </div>
         `).join('')}
       </div>
