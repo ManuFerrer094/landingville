@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CsvService } from '../csv.service';
+import { GithubAuthService } from '../services/github-auth.service';
 import { forkJoin } from 'rxjs';
 
 @Component({
@@ -23,7 +24,9 @@ export class OrganizationComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private csvService: CsvService
+    private csvService: CsvService,
+    public authService: GithubAuthService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -143,6 +146,10 @@ export class OrganizationComponent implements OnInit {
       'React': '#61dafb'
     };
     return colors[language] || '#666666';
+  }
+
+  navigateToLogin(): void {
+    this.router.navigate(['/login']);
   }
 }
 

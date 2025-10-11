@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import { Observable, map, catchError, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -156,19 +156,34 @@ export class CsvService {
   // Get organization teams (requires authentication, will return empty for public access)
   getOrganizationTeams(orgName: string): Observable<any[]> {
     const url = `https://api.github.com/orgs/${orgName}/teams`;
-    return this.http.get<any[]>(url);
+    return this.http.get<any[]>(url).pipe(
+      catchError((error) => {
+        console.warn('Teams endpoint requires authentication:', error);
+        return of([]);
+      })
+    );
   }
 
   // Get organization projects
   getOrganizationProjects(orgName: string): Observable<any[]> {
     const url = `https://api.github.com/orgs/${orgName}/projects`;
-    return this.http.get<any[]>(url);
+    return this.http.get<any[]>(url).pipe(
+      catchError((error) => {
+        console.warn('Projects endpoint requires authentication:', error);
+        return of([]);
+      })
+    );
   }
 
   // Get organization packages
   getOrganizationPackages(orgName: string, packageType: string = 'npm'): Observable<any[]> {
     const url = `https://api.github.com/orgs/${orgName}/packages?package_type=${packageType}`;
-    return this.http.get<any[]>(url);
+    return this.http.get<any[]>(url).pipe(
+      catchError((error) => {
+        console.warn('Packages endpoint requires authentication:', error);
+        return of([]);
+      })
+    );
   }
 
   // Extract organization name from URL
