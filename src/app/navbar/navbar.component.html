@@ -6,6 +6,16 @@
   <span class="spacer"></span>
   
   <div class="navbar-controls">
+    <!-- GitHub Auth -->
+    <button 
+      mat-icon-button 
+      class="control-btn" 
+      (click)="authService.hasToken() ? logout() : navigateToLogin()" 
+      [title]="getAuthTooltip()"
+    >
+      <mat-icon>{{ authService.hasToken() ? 'logout' : 'login' }}</mat-icon>
+    </button>
+    
     <!-- Language Selector -->
     <button mat-icon-button class="control-btn" (click)="toggleLanguage()" [title]="getLanguageTooltip()">
       <mat-icon>{{ getCurrentLanguage() === 'es' ? 'language' : 'translate' }}</mat-icon>

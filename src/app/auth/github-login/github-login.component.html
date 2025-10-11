@@ -1,0 +1,70 @@
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-header">
+      <h1>GitHub Authentication</h1>
+      <p class="subtitle">Enhance your experience with authenticated API access</p>
+    </div>
+
+    <div class="login-content">
+      <div class="info-section">
+        <h3>Why authenticate?</h3>
+        <ul>
+          <li>Access to organization teams, projects, and packages</li>
+          <li>Increased API rate limit (5,000 requests/hour)</li>
+          <li>Access to private repositories (if token has permissions)</li>
+        </ul>
+      </div>
+
+      <div class="token-input-section">
+        <label for="token">GitHub Personal Access Token:</label>
+        <div class="input-wrapper">
+          <input
+            [type]="showToken ? 'text' : 'password'"
+            id="token"
+            [(ngModel)]="token"
+            placeholder="ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+            (keyup.enter)="login()"
+            [disabled]="isLoading"
+          />
+          <button 
+            type="button" 
+            class="toggle-visibility" 
+            (click)="toggleTokenVisibility()"
+            [disabled]="isLoading"
+          >
+            {{ showToken ? '👁️' : '👁️‍🗨️' }}
+          </button>
+        </div>
+        
+        <div class="help-text">
+          <p>
+            Don't have a token? 
+            <a href="https://github.com/settings/tokens/new?scopes=read:org,read:user,repo&description=LandingVille" 
+               target="_blank" 
+               rel="noopener noreferrer">
+              Create one here
+            </a>
+          </p>
+          <small>Required scopes: <code>read:org</code>, <code>read:user</code>, <code>repo</code></small>
+        </div>
+
+        <div class="error-message" *ngIf="errorMessage">
+          {{ errorMessage }}
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button 
+          class="btn btn-primary" 
+          (click)="login()" 
+          [disabled]="isLoading || !token.trim()"
+        >
+          {{ isLoading ? 'Authenticating...' : 'Login with Token' }}
+        </button>
+        <button class="btn btn-secondary" (click)="skipLogin()" [disabled]="isLoading">
+          Continue without Authentication
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

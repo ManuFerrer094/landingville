@@ -12,7 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { CsvReaderComponent } from './csv-reader/csv-reader.component';
 import { HomeComponent } from './home/home.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatListModule } from '@angular/material/list';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
@@ -26,6 +26,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ContributionGraphComponent } from './contribution-graph/contribution-graph.component';
 import { DemoProfileComponent } from './demo-profile/demo-profile.component';
 import { OrganizationComponent } from './organization/organization.component';
+import { GithubLoginComponent } from './auth/github-login/github-login.component';
+import { GithubAuthInterceptor } from './interceptors/github-auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,8 @@ import { OrganizationComponent } from './organization/organization.component';
     HomeComponent,
     ContributionGraphComponent,
     DemoProfileComponent,
-    OrganizationComponent
+    OrganizationComponent,
+    GithubLoginComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +62,13 @@ import { OrganizationComponent } from './organization/organization.component';
     MatProgressBarModule,
     MatProgressSpinnerModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: GithubAuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
