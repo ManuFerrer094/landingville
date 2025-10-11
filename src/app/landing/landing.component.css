@@ -357,13 +357,14 @@
   gap: var(--spacing-lg);
   flex-wrap: wrap;
   justify-content: center;
+  flex-direction: row;
 }
 
 .tech-spinner-item {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  gap: var(--spacing-xs);
+  gap: var(--spacing-sm);
 }
 
 .spinner-container {
