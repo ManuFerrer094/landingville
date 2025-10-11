@@ -1,0 +1,132 @@
+<section id="landing" class="landing-hero animate-fade-in">
+  <div class="container">
+    <div class="profile-section">
+      <div class="profile-card modern-card">
+        <div class="profile-header">
+          <div class="avatar-container">
+            <img class="profile-avatar" [src]="userData.foto" [alt]="userData.nombre">
+            <div class="status-indicator"></div>
+          </div>
+          <div class="profile-info">
+            <h1 class="profile-name">{{ translate('landing.hello') }} {{ userData.nombre }}</h1>
+            <h2 class="profile-role">{{ userData.rol }}</h2>
+            <p class="profile-bio">{{ userData.bio }}</p>
+            
+            <!-- Additional Profile Info -->
+            <div class="profile-details">
+              <div class="profile-detail-item" *ngIf="userData.company">
+                <mat-icon>business</mat-icon>
+                <span>{{ userData.company }}</span>
+              </div>
+              <div class="profile-detail-item" *ngIf="userData.location">
+                <mat-icon>location_on</mat-icon>
+                <span>{{ userData.location }}</span>
+              </div>
+              <div class="profile-detail-item" *ngIf="userData.twitter_username">
+                <mat-icon>alternate_email</mat-icon>
+                <span>{{ userData.twitter_username }}</span>
+              </div>
+            </div>
+            
+            <!-- Top Technologies Section with Progress Spinners -->
+            <div class="technologies-section">
+              <div class="tech-label">{{ translate('landing.topTechnologies') }}:</div>
+              <div class="tech-spinners">
+                <div *ngFor="let langStat of topLanguages" class="tech-spinner-item">
+                  <div class="spinner-container">
+                    <svg class="progress-ring" width="60" height="60">
+                      <circle
+                        class="progress-ring-circle-bg"
+                        stroke="var(--border-color)"
+                        stroke-width="4"
+                        fill="transparent"
+                        r="26"
+                        cx="30"
+                        cy="30"/>
+                      <circle
+                        class="progress-ring-circle"
+                        stroke="var(--primary-color)"
+                        stroke-width="4"
+                        fill="transparent"
+                        r="26"
+                        cx="30"
+                        cy="30"
+                        [style.stroke-dasharray]="163.36"
+                        [style.stroke-dashoffset]="163.36 - (163.36 * langStat.percentage / 100)"
+                        />
+                      <text x="30" y="35" text-anchor="middle" class="percentage-text">
+                        {{ langStat.percentage }}%
+                      </text>
+                    </svg>
+                  </div>
+                  <span class="tech-name">{{ langStat.language }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="contact-section">
+          <div class="contact-buttons">
+            <a *ngIf="userData.blog" target="_blank" [href]="userData.blog" 
+               class="contact-btn" matTooltip="Website">
+              <mat-icon>language</mat-icon>
+            </a>
+            <a *ngIf="userData.github" target="_blank" [href]="userData.github" 
+               class="contact-btn" matTooltip="GitHub">
+              <mat-icon>code</mat-icon>
+            </a>
+            <a *ngIf="userData.twitter_username" target="_blank" [href]="'https://twitter.com/' + userData.twitter_username" 
+               class="contact-btn" matTooltip="Twitter">
+              <mat-icon>share</mat-icon>
+            </a>
+            <a *ngIf="userData.email" [href]="'mailto:' + userData.email" 
+               class="contact-btn" matTooltip="{{ translate('common.email') }}">
+              <mat-icon>email</mat-icon>
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Contribution Graph -->
+      <app-contribution-graph 
+        [username]="userData.username"
+        [contributions]="contributions">
+      </app-contribution-graph>
+      
+      <!-- Enhanced Stats Section -->
+      <div class="enhanced-stats-section animate-slide-in">
+        <h3 class="stats-title">{{ translate('landing.stats') }}</h3>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon">
+              <mat-icon>folder_open</mat-icon>
+            </div>
+            <div class="stat-content">
+              <div class="stat-number">{{ animatedStats.repositories }}</div>
+              <div class="stat-label">{{ translate('landing.repositories') }}</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">
+              <mat-icon>people</mat-icon>
+            </div>
+            <div class="stat-content">
+              <div class="stat-number">{{ animatedStats.followers }}</div>
+              <div class="stat-label">{{ translate('landing.followers') }}</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">
+              <mat-icon>trending_up</mat-icon>
+            </div>
+            <div class="stat-content">
+              <div class="stat-number">{{ animatedStats.contributions }}</div>
+              <div class="stat-label">{{ translate('landing.contributions') }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

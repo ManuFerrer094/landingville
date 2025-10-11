@@ -24,6 +24,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ContributionGraphComponent } from './contribution-graph/contribution-graph.component';
+import { DemoProfileComponent } from './demo-profile/demo-profile.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { ContributionGraphComponent } from './contribution-graph/contribution-gr
     PortfolioComponent,
     CsvReaderComponent,
     HomeComponent,
-    ContributionGraphComponent
+    ContributionGraphComponent,
+    DemoProfileComponent
   ],
   imports: [
     BrowserModule,
