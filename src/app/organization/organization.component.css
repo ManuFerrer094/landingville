@@ -625,3 +625,48 @@
 .auth-card button mat-icon {
   margin-right: var(--spacing-xs);
 }
+
+/* Repository Actions */
+.repo-actions {
+  display: flex;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+.repo-actions button {
+  flex: 1;
+  min-width: 120px;
+}
+
+.repo-actions .github-btn {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.repo-actions .github-btn:hover {
+  background: var(--text-secondary);
+}
+
+/* Member Actions */
+.member-actions {
+  display: flex;
+  gap: var(--spacing-sm);
+  justify-content: center;
+  margin-top: var(--spacing-sm);
+}
+
+.member-actions .github-btn {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.member-actions .github-btn:hover {
+  background: var(--text-secondary);
+}
+
+.member-name {
+  margin-bottom: var(--spacing-xs);
+  font-weight: 500;
+  color: var(--text-primary);
+}

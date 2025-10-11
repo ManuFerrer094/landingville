@@ -43,7 +43,7 @@
       <mat-card *ngFor="let repo of getPopularRepositories(6)" class="repo-card">
         <mat-card-header>
           <mat-card-title>
-            <a [href]="repo.html_url" target="_blank" class="repo-name">{{ repo.name }}</a>
+            <span class="repo-name">{{ repo.name }}</span>
           </mat-card-title>
           <mat-card-subtitle *ngIf="repo.description">{{ repo.description }}</mat-card-subtitle>
         </mat-card-header>
@@ -64,6 +64,16 @@
           </div>
           <div class="repo-topics" *ngIf="repo.topics && repo.topics.length > 0">
             <span class="topic-tag" *ngFor="let topic of repo.topics.slice(0, 5)">{{ topic }}</span>
+          </div>
+          <div class="repo-actions">
+            <button mat-raised-button color="primary" (click)="createLandingFromRepo(repo)">
+              <mat-icon>web</mat-icon>
+              Create Landing
+            </button>
+            <button mat-raised-button (click)="openInGitHub(repo.html_url)" class="github-btn">
+              <mat-icon>open_in_new</mat-icon>
+              View on GitHub
+            </button>
           </div>
         </mat-card-content>
       </mat-card>
@@ -141,7 +151,15 @@
       <mat-card *ngFor="let member of members.slice(0, 30)" class="member-card">
         <img [src]="member.avatar_url" [alt]="member.login" class="member-avatar">
         <mat-card-content>
-          <a [href]="member.html_url" target="_blank" class="member-name">{{ member.login }}</a>
+          <p class="member-name">{{ member.login }}</p>
+          <div class="member-actions">
+            <button mat-mini-fab color="primary" (click)="createLandingFromMember(member)" matTooltip="Create Landing">
+              <mat-icon>web</mat-icon>
+            </button>
+            <button mat-mini-fab (click)="openInGitHub(member.html_url)" matTooltip="View on GitHub" class="github-btn">
+              <mat-icon>open_in_new</mat-icon>
+            </button>
+          </div>
         </mat-card-content>
       </mat-card>
     </div>
