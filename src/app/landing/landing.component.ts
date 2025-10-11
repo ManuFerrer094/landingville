@@ -293,191 +293,218 @@ export class LandingComponent implements OnInit, OnDestroy {
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       line-height: 1.6;
-      color: #333;
-      background: #f5f5f5;
+      color: #000;
+      background: white;
       padding: 20px;
     }
     .cv-container {
       max-width: 800px;
       margin: 0 auto;
       background: white;
-      box-shadow: 0 0 20px rgba(0,0,0,0.1);
-      border-radius: 8px;
-      overflow: hidden;
+      display: flex;
+      gap: 0;
     }
-    .cv-header {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      padding: 40px;
-      text-align: center;
+    .cv-sidebar {
+      width: 250px;
+      background: #f5f5f5;
+      padding: 30px 20px;
+      border-right: 2px solid #e0e0e0;
     }
     .cv-avatar {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      border: 4px solid white;
+      width: 150px;
+      height: 150px;
+      border-radius: 8px;
       margin-bottom: 20px;
       object-fit: cover;
+      display: block;
     }
     .cv-name {
-      font-size: 32px;
+      font-size: 24px;
       font-weight: 700;
-      margin-bottom: 10px;
+      margin-bottom: 5px;
+      color: #000;
     }
     .cv-role {
-      font-size: 20px;
-      opacity: 0.9;
-      margin-bottom: 15px;
+      font-size: 16px;
+      color: #555;
+      margin-bottom: 20px;
+      font-weight: 500;
+    }
+    .sidebar-section {
+      margin-bottom: 25px;
+    }
+    .sidebar-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #000;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      letter-spacing: 0.5px;
+    }
+    .sidebar-item {
+      font-size: 12px;
+      margin-bottom: 8px;
+      color: #333;
+      word-wrap: break-word;
+    }
+    .sidebar-label {
+      font-weight: 600;
+      color: #000;
+      display: block;
+      margin-bottom: 2px;
+    }
+    .cv-stat-small {
+      background: white;
+      padding: 12px;
+      border-radius: 6px;
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+    }
+    .cv-stat-number-small {
+      font-size: 24px;
+      font-weight: 700;
+      color: #000;
+    }
+    .cv-stat-label-small {
+      font-size: 11px;
+      color: #666;
+      text-transform: uppercase;
+    }
+    .cv-main {
+      flex: 1;
+      padding: 30px;
+    }
+    .cv-header {
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 3px solid #000;
     }
     .cv-bio {
       font-size: 14px;
-      opacity: 0.85;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-    .cv-content {
-      padding: 40px;
+      color: #333;
+      line-height: 1.8;
     }
     .cv-section {
       margin-bottom: 30px;
     }
     .cv-section-title {
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 700;
-      color: #667eea;
+      color: #000;
       margin-bottom: 15px;
-      padding-bottom: 10px;
-      border-bottom: 2px solid #667eea;
-    }
-    .cv-info-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 15px;
-      margin-bottom: 20px;
-    }
-    .cv-info-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .cv-info-label {
-      font-weight: 600;
-      color: #667eea;
-    }
-    .cv-stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 20px;
-    }
-    .cv-stat-card {
-      background: #f8f9fa;
-      padding: 20px;
-      border-radius: 8px;
-      text-align: center;
-      border: 1px solid #e0e0e0;
-    }
-    .cv-stat-number {
-      font-size: 32px;
-      font-weight: 700;
-      color: #667eea;
-      margin-bottom: 5px;
-    }
-    .cv-stat-label {
-      font-size: 14px;
-      color: #666;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #000;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
     .cv-tech-list {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 8px;
     }
     .cv-tech-item {
-      background: #f8f9fa;
-      padding: 8px 16px;
-      border-radius: 20px;
-      font-size: 14px;
-      border: 1px solid #e0e0e0;
+      background: #f5f5f5;
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 12px;
+      border: 1px solid #ddd;
+      color: #333;
     }
     .cv-tech-percentage {
-      color: #667eea;
+      color: #000;
       font-weight: 600;
-      margin-left: 5px;
+      margin-left: 4px;
     }
-    .projects-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 15px;
+    .project-item {
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #e0e0e0;
     }
-    .projects-table th,
-    .projects-table td {
-      border: 1px solid #e0e0e0;
-      padding: 10px;
-      text-align: left;
+    .project-item:last-child {
+      border-bottom: none;
     }
-    .projects-table th {
-      background: #667eea;
-      color: white;
-      font-weight: 600;
+    .project-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 8px;
     }
-    .projects-table tr:nth-child(even) {
-      background: #f8f9fa;
+    .project-name {
+      font-size: 16px;
+      font-weight: 700;
+      color: #000;
+    }
+    .project-meta {
+      font-size: 12px;
+      color: #666;
+    }
+    .project-description {
+      font-size: 13px;
+      color: #333;
+      margin-bottom: 5px;
+      line-height: 1.6;
+    }
+    .project-details {
+      display: flex;
+      gap: 15px;
+      font-size: 11px;
+      color: #666;
+    }
+    .project-detail {
+      display: flex;
+      align-items: center;
+      gap: 4px;
     }
     @media print {
       body {
-        background: white;
         padding: 0;
-      }
-      .cv-container {
-        box-shadow: none;
-        max-width: 100%;
       }
     }
   </style>
 </head>
 <body>
   <div class="cv-container">
-    <div class="cv-header">
+    <div class="cv-sidebar">
       <img src="${user.foto}" alt="${user.nombre}" class="cv-avatar">
       <h1 class="cv-name">${user.nombre}</h1>
-      <h2 class="cv-role">${user.rol}</h2>
-      ${user.bio ? `<p class="cv-bio">${user.bio}</p>` : ''}
-    </div>
-    
-    <div class="cv-content">
-      <div class="cv-section">
-        <h3 class="cv-section-title">Información de Contacto</h3>
-        <div class="cv-info-grid">
-          ${user.email ? `<div class="cv-info-item"><span class="cv-info-label">Email:</span> ${user.email}</div>` : ''}
-          ${user.telefono ? `<div class="cv-info-item"><span class="cv-info-label">Teléfono:</span> ${user.telefono}</div>` : ''}
-          ${user.location ? `<div class="cv-info-item"><span class="cv-info-label">Ubicación:</span> ${user.location}</div>` : ''}
-          ${user.company ? `<div class="cv-info-item"><span class="cv-info-label">Empresa:</span> ${user.company}</div>` : ''}
-          ${user.github ? `<div class="cv-info-item"><span class="cv-info-label">GitHub:</span> <a href="${user.github}">${user.github}</a></div>` : ''}
-          ${user.blog ? `<div class="cv-info-item"><span class="cv-info-label">Website:</span> <a href="${user.blog}">${user.blog}</a></div>` : ''}
-          ${user.twitter_username ? `<div class="cv-info-item"><span class="cv-info-label">Twitter:</span> @${user.twitter_username}</div>` : ''}
-        </div>
+      <p class="cv-role">${user.rol}</p>
+      
+      <div class="sidebar-section">
+        <h3 class="sidebar-title">Contacto</h3>
+        ${user.email ? `<div class="sidebar-item"><span class="sidebar-label">Email</span>${user.email}</div>` : ''}
+        ${user.telefono ? `<div class="sidebar-item"><span class="sidebar-label">Teléfono</span>${user.telefono}</div>` : ''}
+        ${user.location ? `<div class="sidebar-item"><span class="sidebar-label">Ubicación</span>${user.location}</div>` : ''}
+        ${user.company ? `<div class="sidebar-item"><span class="sidebar-label">Empresa</span>${user.company}</div>` : ''}
+        ${user.github ? `<div class="sidebar-item"><span class="sidebar-label">GitHub</span>${user.github.replace('https://github.com/', '')}</div>` : ''}
+        ${user.blog ? `<div class="sidebar-item"><span class="sidebar-label">Website</span>${user.blog}</div>` : ''}
+        ${user.twitter_username ? `<div class="sidebar-item"><span class="sidebar-label">Twitter</span>@${user.twitter_username}</div>` : ''}
       </div>
       
-      <div class="cv-section">
-        <h3 class="cv-section-title">Estadísticas de GitHub</h3>
-        <div class="cv-stats-grid">
-          <div class="cv-stat-card">
-            <div class="cv-stat-number">${stats.repositories}</div>
-            <div class="cv-stat-label">Repositorios</div>
-          </div>
-          <div class="cv-stat-card">
-            <div class="cv-stat-number">${stats.followers}</div>
-            <div class="cv-stat-label">Seguidores</div>
-          </div>
-          <div class="cv-stat-card">
-            <div class="cv-stat-number">${stats.contributions}</div>
-            <div class="cv-stat-label">Contribuciones</div>
-          </div>
+      <div class="sidebar-section">
+        <h3 class="sidebar-title">Estadísticas</h3>
+        <div class="cv-stat-small">
+          <div class="cv-stat-number-small">${stats.repositories}</div>
+          <div class="cv-stat-label-small">Repositorios</div>
         </div>
+        <div class="cv-stat-small">
+          <div class="cv-stat-number-small">${stats.followers}</div>
+          <div class="cv-stat-label-small">Seguidores</div>
+        </div>
+        <div class="cv-stat-small">
+          <div class="cv-stat-number-small">${stats.contributions}</div>
+          <div class="cv-stat-label-small">Contribuciones</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="cv-main">
+      <div class="cv-header">
+        ${user.bio ? `<p class="cv-bio">${user.bio}</p>` : '<p class="cv-bio">Desarrollador apasionado por la tecnología y el código abierto.</p>'}
       </div>
       
       ${this.topLanguages.length > 0 ? `
       <div class="cv-section">
-        <h3 class="cv-section-title">Tecnologías Principales</h3>
+        <h3 class="cv-section-title">Tecnologías</h3>
         <div class="cv-tech-list">
           ${this.topLanguages.map(lang => 
             `<div class="cv-tech-item">${lang.language}<span class="cv-tech-percentage">${lang.percentage}%</span></div>`
@@ -488,27 +515,19 @@ export class LandingComponent implements OnInit, OnDestroy {
       
       ${this.userProjects.length > 0 ? `
       <div class="cv-section">
-        <h3 class="cv-section-title">Proyectos</h3>
-        <table class="projects-table">
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Descripción</th>
-              <th>Lenguaje</th>
-              <th>⭐ Stars</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${this.userProjects.map(project => `
-              <tr>
-                <td><strong>${project.name}</strong></td>
-                <td>${project.description || 'Sin descripción'}</td>
-                <td>${project.language || 'N/A'}</td>
-                <td>${project.stargazers_count}</td>
-              </tr>
-            `).join('')}
-          </tbody>
-        </table>
+        <h3 class="cv-section-title">Proyectos Destacados</h3>
+        ${this.userProjects.map(project => `
+          <div class="project-item">
+            <div class="project-header">
+              <span class="project-name">${project.name}</span>
+              <span class="project-meta">⭐ ${project.stargazers_count}</span>
+            </div>
+            <p class="project-description">${project.description || 'Sin descripción'}</p>
+            <div class="project-details">
+              ${project.language ? `<span class="project-detail">🔹 ${project.language}</span>` : ''}
+            </div>
+          </div>
+        `).join('')}
       </div>
       ` : ''}
     </div>
