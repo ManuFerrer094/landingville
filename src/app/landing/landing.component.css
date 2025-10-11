@@ -161,6 +161,11 @@
   height: 24px;
 }
 
+.download-cv-btn {
+  border: none;
+  cursor: pointer;
+}
+
 /* Enhanced Stats Section */
 .enhanced-stats-section {
   background: var(--bg-card);
