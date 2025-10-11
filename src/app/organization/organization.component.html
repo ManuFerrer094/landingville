@@ -150,42 +150,91 @@
     </div>
   </section>
 
-  <!-- Links of Interest -->
-  <section class="org-section">
+  <!-- Teams Section -->
+  <section class="org-section" *ngIf="teams.length > 0">
     <h2 class="section-title">
-      <mat-icon>link</mat-icon>
-      Links of Interest
+      <mat-icon>groups</mat-icon>
+      Teams ({{ teams.length }})
     </h2>
-    <div class="links-grid">
-      <a [href]="organizationData.html_url" target="_blank" class="interest-link" mat-raised-button>
-        <mat-icon>home</mat-icon>
-        Organization Home
-      </a>
-      <a [href]="organizationData.html_url + '/repositories'" target="_blank" class="interest-link" mat-raised-button>
-        <mat-icon>folder</mat-icon>
-        All Repositories
-      </a>
-      <a [href]="organizationData.html_url + '/people'" target="_blank" class="interest-link" mat-raised-button>
-        <mat-icon>people</mat-icon>
-        All Members
-      </a>
-      <a [href]="organizationData.html_url + '/projects'" target="_blank" class="interest-link" mat-raised-button>
-        <mat-icon>dashboard</mat-icon>
-        Projects
-      </a>
-      <a [href]="organizationData.html_url + '/teams'" target="_blank" class="interest-link" mat-raised-button>
-        <mat-icon>groups</mat-icon>
-        Teams
-      </a>
-      <a [href]="organizationData.html_url + '/packages'" target="_blank" class="interest-link" mat-raised-button>
-        <mat-icon>inventory_2</mat-icon>
-        Packages
-      </a>
-      <a [href]="'https://github.com/orgs/' + organizationName + '/discussions'" target="_blank" 
-         class="interest-link" mat-raised-button>
-        <mat-icon>forum</mat-icon>
-        Discussions
-      </a>
+    <div class="teams-grid">
+      <mat-card *ngFor="let team of teams" class="team-card">
+        <mat-card-header>
+          <mat-card-title>{{ team.name }}</mat-card-title>
+          <mat-card-subtitle *ngIf="team.description">{{ team.description }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="team-stats">
+            <span class="team-stat" *ngIf="team.members_count">
+              <mat-icon>people</mat-icon>
+              {{ team.members_count }} members
+            </span>
+            <span class="team-stat" *ngIf="team.privacy">
+              <mat-icon>lock</mat-icon>
+              {{ team.privacy }}
+            </span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section class="org-section" *ngIf="projects.length > 0">
+    <h2 class="section-title">
+      <mat-icon>dashboard</mat-icon>
+      Projects ({{ projects.length }})
+    </h2>
+    <div class="projects-grid">
+      <mat-card *ngFor="let project of projects" class="project-card">
+        <mat-card-header>
+          <mat-card-title>
+            <a [href]="project.html_url" target="_blank" class="project-name">{{ project.name }}</a>
+          </mat-card-title>
+          <mat-card-subtitle *ngIf="project.body">{{ project.body }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="project-stats">
+            <span class="project-stat" *ngIf="project.state">
+              <mat-icon>info</mat-icon>
+              {{ project.state }}
+            </span>
+            <span class="project-stat" *ngIf="project.created_at">
+              <mat-icon>schedule</mat-icon>
+              Created {{ project.created_at | date:'short' }}
+            </span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </section>
+
+  <!-- Packages Section -->
+  <section class="org-section" *ngIf="packages.length > 0">
+    <h2 class="section-title">
+      <mat-icon>inventory_2</mat-icon>
+      Packages ({{ packages.length }})
+    </h2>
+    <div class="packages-grid">
+      <mat-card *ngFor="let package of packages" class="package-card">
+        <mat-card-header>
+          <mat-card-title>
+            <a [href]="package.html_url" target="_blank" class="package-name">{{ package.name }}</a>
+          </mat-card-title>
+          <mat-card-subtitle *ngIf="package.package_type">{{ package.package_type }}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="package-stats">
+            <span class="package-stat" *ngIf="package.visibility">
+              <mat-icon>visibility</mat-icon>
+              {{ package.visibility }}
+            </span>
+            <span class="package-stat" *ngIf="package.created_at">
+              <mat-icon>schedule</mat-icon>
+              {{ package.created_at | date:'short' }}
+            </span>
+          </div>
+        </mat-card-content>
+      </mat-card>
     </div>
   </section>
 </div>

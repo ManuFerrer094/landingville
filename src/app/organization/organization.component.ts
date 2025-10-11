@@ -13,6 +13,9 @@ export class OrganizationComponent implements OnInit {
   organizationData: any = null;
   repositories: any[] = [];
   members: any[] = [];
+  teams: any[] = [];
+  projects: any[] = [];
+  packages: any[] = [];
   isLoading: boolean = true;
   errorMessage: string = '';
   repositoriesWithActivity: any[] = [];
@@ -37,16 +40,22 @@ export class OrganizationComponent implements OnInit {
     this.isLoading = true;
     this.errorMessage = '';
 
-    // Fetch organization details, repositories, and members in parallel
+    // Fetch organization details, repositories, members, teams, projects, and packages in parallel
     forkJoin({
       organization: this.csvService.getOrganizationDetails(this.organizationName),
       repositories: this.csvService.getOrganizationRepositories(this.organizationName),
-      members: this.csvService.getOrganizationPublicMembers(this.organizationName)
+      members: this.csvService.getOrganizationPublicMembers(this.organizationName),
+      teams: this.csvService.getOrganizationTeams(this.organizationName),
+      projects: this.csvService.getOrganizationProjects(this.organizationName),
+      packages: this.csvService.getOrganizationPackages(this.organizationName)
     }).subscribe({
       next: (data) => {
         this.organizationData = data.organization;
         this.repositories = data.repositories;
         this.members = data.members;
+        this.teams = data.teams || [];
+        this.projects = data.projects || [];
+        this.packages = data.packages || [];
 
         // Load commit activity for each repository (limit to top 10)
         this.loadRepositoriesCommitActivity(this.repositories.slice(0, 10));
